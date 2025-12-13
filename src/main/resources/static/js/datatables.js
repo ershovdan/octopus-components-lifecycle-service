@@ -4382,8 +4382,8 @@
 	 *  @param {object} oSettings dataTables settings object
 	 *  @param {object} json json data return from the server.
 	 *  @param {string} json.sEcho Tracking flag for DataTables to match requests
-	 *  @param {int} json.iTotalRecords Number of records in the data set, not accounting for filtering
-	 *  @param {int} json.iTotalDisplayRecords Number of records in the data set, accounting for filtering
+	 *  @param {int} json.iTotalRecords Number of records in the data set
+	 *  @param {int} json.iTotalDisplayRecords Number of records in the data set after filtering
 	 *  @param {array} json.aaData The data to display on this page
 	 *  @param {string} [json.sColumns] Column ordering (sName, comma separated)
 	 *  @memberof DataTable#oApi
