@@ -2,10 +2,11 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.4'
 	id 'io.spring.dependency-management' version '1.1.7'
+    id 'com.bmuschko.docker-java-application'
 }
 
 group = 'org.octopusden.octopus'
-version = '0.0.1-SNAPSHOT'
+
 
 java {
 	toolchain {
@@ -54,4 +55,33 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+def dockerRegistry = System.getenv().getOrDefault("DOCKER_REGISTRY", project.properties["docker.registry"])
+def octopusGithubDockerRegistry = System.getenv().getOrDefault("OCTOPUS_GITHUB_DOCKER_REGISTRY", project.properties["octopus.github.docker.registry"])
+
+dockerCreateDockerfile.doLast {
+    copy {
+        from 'Dockerfile'
+        into dockerSyncBuildContext.destinationDir
+    }
+}
+
+tasks.named('dockerSyncBuildContext') {
+    def bootJarArchive = tasks.named('bootJar').flatMap { it.archiveFile }
+    from(bootJarArchive) {
+        into('build/libs')
+    }
+    dependsOn bootJar
+}
+
+dockerBuildImage {
+    inputDir = dockerSyncBuildContext.destinationDir
+    buildArgs.put("DOCKER_REGISTRY", "$dockerRegistry")
+    buildArgs.put("BUILD_VERSION", "${project.version}")
+    images.set(["$octopusGithubDockerRegistry/octopusden/components-lifecycle-service:${project.version}"])
+
+    dependsOn dockerSyncBuildContext
+    dependsOn bootJar
+}
+
 

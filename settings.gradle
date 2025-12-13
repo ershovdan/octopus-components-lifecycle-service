@@ -1,2 +1,14 @@
+pluginManagement {
+    plugins {
+        id 'com.bmuschko.docker-java-application'      version settings['gradle-docker-plugin.version']
+    }
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        jcenter()
+    }
+}
+
+
 rootProject.name = 'components-lifecycle-service'
 
