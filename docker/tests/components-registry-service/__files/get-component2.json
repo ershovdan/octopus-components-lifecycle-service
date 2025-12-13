@@ -1,0 +1,21 @@
+{
+  "id": "component2",
+  "name": "bbb",
+  "componentOwner": "abiba",
+  "system": [
+    "NONE"
+  ],
+  "clientCode": null,
+  "releasesInDefaultBranch": true,
+  "solution": false,
+  "parentComponent": null,
+  "securityChampion": null,
+  "releaseManager": "abiba",
+  "distribution": {
+    "explicit": false,
+    "external": true,
+    "securityGroups": {
+      "read": []
+    }
+  }
+}

@@ -1,0 +1,395 @@
+<div class="container-fluid pl-0 pr-0" style="display: none;" id="displayRulesBlock">
+    <img id="dragImg" th:src="@{img/drag.png}" style="display: none;"/>
+    <img id="deleteImg" th:src="@{img/delete.png}" style="display: none;"/>
+    <img id="editImg" th:src="@{img/edit.png}" style="display: none;"/>
+    <div class="row">
+        <p class="h3 mb-3 pl-2 pb-2 w-100" style="border-bottom: black 1px solid;"><span class="font-weight-bold" id="displayRules-componentId"></span></p>
+    </div>
+    <div class="row">
+        <div class="container mb-4" id="displayRules-container">
+            <div class="row d-flex" id="rulesInfo">
+                <p class="h2">Rules</p>
+                <img id="addRuleButton" class="mt-2 ml-2" th:src="@{img/add.png}" height="25" width="25">
+            </div>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <a class="seeVersions rulesInfoButton" id="seeVersionsButton">Show builds</a>
+    </div>
+    <div class="row w-100 mt-1 mb-4" id="buildsTableRow" style="display: none;">
+        <div>
+            <a filterStatus="BUILD" class="btn btn-primary btn-icon-split filterBuilds" id="filterBuildsBuild">
+                <span class="text">BUILD</span>
+            </a>
+            <a filterStatus="RC" class="btn btn-primary btn-icon-split filterBuilds" id="filterBuildsRC">
+                <span class="text">RC</span>
+            </a>
+            <a filterStatus="RELEASE" class="btn btn-primary btn-icon-split filterBuilds" id="filterBuildsRelease">
+                <span class="text">RELEASE</span>
+            </a>
+        </div>
+        <table class="table table-bordered" id="buildsTable" data-order='[[1, "desc"]]'>
+            <thead>
+            <tr>
+                <th id="version_th">Build</th>
+                <th>Build date</th>
+                <th>Status</th>
+                <th>Lifecycle stage</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <p class="text-center mt-2 ">
+            <a class="text rulesInfoButton" id="hideVersionsTable">Hide builds</a>
+        </p>
+    </div>
+
+    <style>
+        .rulesInfoButton {
+            color: #1585ff;
+        }
+
+        .rulesInfoButton:hover {
+            cursor: pointer;
+        }
+
+        .deleteRuleButton:hover {
+            cursor: pointer;
+        }
+
+        .editRuleButton:hover {
+            cursor: pointer;
+        }
+
+        .over {
+            border-top: 4px solid orange !important;
+        }
+
+        .draggableRule {
+            user-select: none;
+            border: 1px solid #e3e6f0;
+        }
+
+        #addRuleButton:hover {
+            cursor: pointer;
+        }
+
+        .dragIcon:hover {
+            cursor: pointer;
+        }
+
+        .vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+    </style>
+
+    <script>
+        function displayRules(componentId, canEdit) {
+            const dragImg = document.getElementById('dragImg');
+            const deleteImg = document.getElementById('deleteImg');
+            const editImg = document.getElementById('editImg');
+
+            function getDescription(rule) {
+                if (rule["dateFormat"] == null) {
+                    if (rule["versionRange"] != null) {
+                        return "if in version range " + rule["versionRange"]
+                    }
+                    return "In any case"
+                } else if (rule["dateFormat"] === "abs") {
+                    if (rule["minDate"] != null && rule["maxDate"] == null) {
+                        return "if created after " + rule["minDate"]
+                    } else if (rule["minDate"] == null && rule["maxDate"] != null) {
+                        return"if created before " + rule["maxDate"]
+                    } else {
+                        return "if created between " + rule["minDate"] + " and " + rule["maxDate"]
+                    }
+                } else if (rule["dateFormat"] === "rel") {
+                    return "if created not further than " + rule["timeGap"] + " days ago"
+                }
+            }
+
+            function getColor(lifecycleStage) {
+                if (lifecycleStage === "active") return "#1cc88a"
+                else if (lifecycleStage === "maintenance") return "#36b9cc"
+                else if (lifecycleStage === "unsupported") return "#858796"
+            }
+
+            const globalRules = [
+                JSON.parse(httpGet("/api/rules/globalActive")),
+                JSON.parse(httpGet("/api/rules/globalMaintenance"))
+            ]
+            const rules = JSON.parse(httpGet("/api/rules?componentId=" + componentId))
+
+            let filterBuildsSelect = null
+
+            for (let rule of rules) {
+                document.getElementById("displayRules-container").innerHTML += "" +
+                    "<div ruleName='" + rule["name"]  + "' id='rowRule-" + rule["name"] + "' class='row mt-2 draggableRule shadow pt-1 pb-1'>" +
+                        "<div class=\"col no-gutters align-items-center d-flex\">" +
+                            "<div class='mr-2'>" +
+                                "<img class=\"dragIcon draggableRuleIcon\" src=\"" + dragImg.src + "\" height=\"25\" width=\"25\" draggable=\"false\">" +
+                            "</div>" +
+                            "<div class=\"\" style='width: max-content;'>" +
+                                "<div class=\"text font-weight-bold text-gray-800\">" + rule["name"] + "</div>" +
+                                "<div class=\"text mb-0 font-weight-bold text-gray-800\">Set <span class=\"font-weight-bold\" style='color: " + getColor(rule["putLifecycleStage"]) + "'>" + rule["putLifecycleStage"] + "</span> " + getDescription(rule) + "</div>" +
+                            "</div>" +
+                        "</div>" +
+                        "<div class='d-flex justify-content-end col'>" +
+                            "<div class='d-flex justify-content-center mr-1' style='flex-direction: column;'>" +
+                                "<img class=\"editRuleButton\" ruleName='" + rule["name"]  + "' src=\"" + editImg.src + "\" height=\"20\" width=\"20\" draggable=\"false\">" +
+                            "</div>" +
+                            "<div class='d-flex justify-content-center' style='flex-direction: column;'>" +
+                                "<img class=\"deleteRuleButton\" ruleName='" + rule["name"]  + "' src=\"" + deleteImg.src + "\" height=\"20\" width=\"20\" draggable=\"false\">" +
+                            "</div>" +
+                        "</div>" +
+                    "</div>"
+            }
+
+            for (let rule of globalRules) {
+                document.getElementById("displayRules-container").innerHTML += "" +
+                    "<div ruleName='" + rule["name"]  + "' id='rowRule-" + rule["name"] + "' class='row mt-2 shadow pt-1 pb-1'>" +
+                        "<div class=\"col no-gutters align-items-center d-flex\">" +
+                            "<div class='mr-2' style='width: 25px; font-size: 0.6em;font-weight: bold; text-align: center;'>" +
+                                "<div class=\"vertical-text\">GLOBAL</div>" +
+                            "</div>" +
+                            "<div class=\"\" style='width: max-content;'>" +
+                                "<div class=\"text font-weight-bold text-gray-800\">" + rule["name"] + "</div>" +
+                                "<div class=\"text mb-0 font-weight-bold text-gray-800\">Set <span class=\"font-weight-bold\" style='color: " + getColor(rule["putLifecycleStage"]) + "'>" + rule["putLifecycleStage"] + "</span> " + getDescription(rule) + "</div>" +
+                            "</div>" +
+                        "</div>" +
+                    "</div>"
+            }
+
+            const buildsTable = new DataTable("#buildsTable", {
+                paging: true,
+                searching: true,
+                info: false,
+                pageLength: 10,
+                lengthChange: false,
+                columns: [
+                    { title: "Build", width: "30%", orderable: true },
+                    { title: "Build date", width: "30%", orderable: true },
+                    { title: "Status", width: "20%", orderable: false },
+                    { title: "Lifecycle stage", width: "20%", orderable: false }
+                ],
+                stateSave: true,
+                stateDuration: 10 * 60
+            })
+
+            if (getCookie("tableIsOpen") !== "true") {
+                buildsTable.state.clear()
+                buildsTable.search('').order([]).page('first').draw(false);
+            }
+
+            if (rules.length > 0) {
+                for (let deleteButton of document.getElementsByClassName("deleteRuleButton")) {
+                    if (canEdit) {
+                        deleteButton.addEventListener("click", () => {
+                            httpDelete("/api/rules/" + deleteButton.getAttribute("ruleName") + "?componentId=" + componentId)
+                            document.getElementById("rowRule-" + deleteButton.getAttribute("ruleName")).remove()
+
+                            onPageChangeRules()
+                        })
+                    } else {
+                        deleteButton.style.display = 'none'
+                    }
+                }
+
+                for (let editButton of document.getElementsByClassName("editRuleButton")) {
+                    if (canEdit) {
+                        editButton.addEventListener("click", () => {
+                            if (document.getElementById("buildsTableRow").style.display !== "none") {
+                                setCookie("tableIsOpen", "true", 10 * 60)
+                            }
+
+                            if (filterBuildsSelect != null) {
+                                setCookie("filterBuildsSelect", filterBuildsSelect, 10 * 60)
+                            }
+
+                            document.getElementById("columnRight").innerHTML = editRuleBlock
+                            editRule(componentId, editButton.getAttribute("ruleName"))
+                        })
+                    } else {
+                        editButton.style.display = 'none'
+                    }
+                }
+
+                if (canEdit) {
+                    let dragged
+                    document.querySelectorAll(".draggableRuleIcon").forEach(el => {
+                        let parentEl = el.parentNode.parentNode.parentNode
+
+                        parentEl.setAttribute("draggable", "true")
+
+                        parentEl.addEventListener("dragstart", (e) => {
+                            dragged = e.target
+                            e.dataTransfer.effectAllowed = "move"
+                        })
+
+                        parentEl.addEventListener("dragover", (e) => {
+                            e.preventDefault()
+                            parentEl.classList.add("over")
+                        })
+
+                        parentEl.addEventListener("dragleave", () => parentEl.classList.remove("over"))
+
+                        parentEl.addEventListener("drop", (e) => {
+                            e.preventDefault()
+                            parentEl.classList.remove("over")
+
+                            if (dragged && dragged !== parentEl) {
+                                const parent = parentEl.parentNode
+                                const draggedNext = dragged.nextSibling === parentEl ? dragged : dragged.nextSibling
+
+                                parent.insertBefore(dragged, parentEl)
+                                parent.insertBefore(parentEl, draggedNext)
+                            }
+
+                            let newOrder = []
+                            for (let r of document.getElementsByClassName("draggableRule")) {
+                                newOrder.push(r.getAttribute("ruleName"))
+                            }
+                            httpPost("/api/rules/set-order?componentId=" + componentId + "&rules=" + newOrder.toString())
+
+                            onPageChangeRules()
+                        })
+                    })
+                } else {
+                    for (let r of document.getElementsByClassName("draggableRule")) {
+                        r.style.userSelect = 'text'
+                    }
+                }
+
+            }
+
+            if (canEdit) {
+                document.getElementById("addRuleButton").onclick = () => {
+                    if (document.getElementById("buildsTableRow").style.display !== "none") {
+                        setCookie("tableIsOpen", "true", 10 * 60)
+                    }
+
+                    if (filterBuildsSelect != null) {
+                        setCookie("filterBuildsSelect", filterBuildsSelect, 10 * 60)
+                    }
+
+                    document.getElementById("columnRight").innerHTML = createRuleBlock
+                    createRule(componentId)
+                }
+            } else {
+                document.getElementById("addRuleButton").remove()
+            }
+
+            document.getElementById("seeVersionsButton").onclick = () => {
+                document.getElementById("seeVersionsButton").style.display = 'none'
+
+                buildsTable.state.clear()
+                buildsTable.search('').order([]).page('first').draw(false);
+
+                eraseCookie("tableIsOpen");
+                eraseCookie("filterBuildsSelect")
+
+                for (let b of document.getElementsByClassName("filterBuilds")) {
+                    b.classList.remove("btn-success")
+                    b.classList.add("btn-primary")
+                }
+
+                constructBuildsTable(null)
+            }
+
+            function constructBuildsTable(buildStatus) {
+                buildsTable.clear();
+
+                for (let build of JSON.parse(httpGet("/api/components/" + componentId + "/builds"))) {
+                    if (buildStatus === null) {
+                        buildsTable.row.add([build["id"], build["buildDate"], build["status"], ""])
+                    } else {
+                        if (build["status"] === buildStatus) {
+                            buildsTable.row.add([build["id"], build["buildDate"], build["status"], ""])
+                        }
+                    }
+                }
+                buildsTable.draw()
+
+                document.getElementById("hideVersionsTable").onclick = () => {
+                    document.getElementById("buildsTableRow").style.display = "none"
+                    document.getElementById("seeVersionsButton").style.display = 'block'
+                }
+
+                for (let filterBuilds of document.getElementsByClassName("filterBuilds")) {
+                    filterBuilds.onclick = () => {
+                        for (let b of document.getElementsByClassName("filterBuilds")) {
+                            b.classList.remove("btn-success")
+                            b.classList.add("btn-primary")
+                        }
+
+                        if (filterBuildsSelect !== filterBuilds.getAttribute("filterStatus")) {
+                            filterBuildsSelect = filterBuilds.getAttribute("filterStatus")
+                            filterBuilds.classList.remove("btn-primary")
+                            filterBuilds.classList.add("btn-success")
+                        } else {
+                            filterBuildsSelect = null
+                        }
+
+                        constructBuildsTable(filterBuildsSelect)
+                    }
+                }
+
+                onPageChangeRules()
+
+                document.getElementById("buildsTableRow").style.display = "block"
+                document.getElementById("buildsTableRow").scrollIntoView();
+            }
+
+            function onPageChangeRules(redraw = true) {
+                const data = buildsTable.rows({ search: 'applied', page: 'current' }).data()
+                const indexes = buildsTable.rows({ search: 'applied', page: 'current' }).indexes()
+
+                for (let i = 0; i < data.length; i++) {
+                    fetch("/api/components/" + componentId + "/builds/" + data[i][0] + "/lifecycle-stage")
+                        .then(response => response.json())
+                        .then(lifecycleStage => {
+                            buildsTable.cell(indexes[i], 3).data("<p style='color: " + getColor(lifecycleStage) + "; margin: 0;'>" + lifecycleStage + "</p>")
+                            if (redraw) buildsTable.draw(false)
+                        })
+                        .catch(() => {
+                            buildsTable.cell(indexes[i], 3).data("<span style='color: #dc3545'>Error</span>")
+                            if (redraw) buildsTable.draw(false)
+                        })
+                }
+
+                if (redraw) buildsTable.draw(false)
+            }
+
+            buildsTable.on('page.dt', () => onPageChangeRules(false))
+            buildsTable.on('search.dt', () => onPageChangeRules(false))
+            document.getElementById('version_th').addEventListener('click', () => buildsTable.on('draw.dt', () => onPageChangeRules(false)))
+
+            document.getElementById("displayRules-componentId").innerHTML = componentId;
+            document.getElementById("displayRulesBlock").style.display = "block"
+
+            if (getCookie("tableIsOpen") === "true") {
+                document.getElementById("seeVersionsButton").style.display = 'none'
+                constructBuildsTable(null)
+                eraseCookie("tableIsOpen");
+            }
+
+            if (getCookie("filterBuildsSelect") != null) {
+                switch (getCookie("filterBuildsSelect")) {
+                    case "BUILD":
+                        document.getElementById("filterBuildsBuild").click()
+                        break;
+                    case "RC":
+                        document.getElementById("filterBuildsRC").click()
+                        break;
+                    case "RELEASE":
+                        document.getElementById("filterBuildsRelease").click()
+                        break;
+                }
+
+                eraseCookie("filterBuildsSelect")
+            }
+        }
+    </script>
+</div>

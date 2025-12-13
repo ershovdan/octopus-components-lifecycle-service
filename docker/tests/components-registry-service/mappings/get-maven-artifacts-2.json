@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/rest/api/2/components/component2/maven-artifacts"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "get-maven-artifacts-2.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

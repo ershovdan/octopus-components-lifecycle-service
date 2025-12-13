@@ -1,0 +1,243 @@
+<div class="container-fluid" style="display: none;" id="editRuleBlock">
+    <div class="row">
+        <div class="container m-0 pl-4">
+            <div class="row d-flex">
+                <p class="text font-weight-bold mt-1 mb-0">Name</p>
+                <input type="text" id="name" placeholder="name" class="ml-2">
+            </div>
+
+            <div class="row mt-3">
+                <div class="col pl-0">
+                    <p class="text font-weight-bold mb-0">Set</p>
+                    <div class="row ml-3">
+                        <div class="col-3">
+                            <div class="row" style="width: max-content;">
+                                <input type="radio"
+                                       id="lifecycleStageActive"
+                                       name="lifecycleStageRadio"
+                                       value="Active">
+                                <label class="ml-2 mb-0" style="color: #1cc88a;" for="lifecycleStageActive">Active</label>
+                            </div>
+
+                            <div class="row" style="width: max-content;">
+                                <input type="radio"
+                                       id="lifecycleStageMaintenance"
+                                       name="lifecycleStageRadio"
+                                       value="Maintenance">
+                                <label class="ml-2 mb-0" style="color: #36b9cc;" for="lifecycleStageMaintenance">Maintenance</label>
+                            </div>
+
+                            <div class="row" style="width: max-content;">
+                                <input type="radio"
+                                       id="lifecycleStageUnsupported"
+                                       name="lifecycleStageRadio"
+                                       value="Unsupported" checked>
+                                <label class="ml-2 mb-0" for="lifecycleStageUnsupported">Unsupported</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <p class="text font-weight-bold mb-0">By</p>
+                    <div class="row ml-3">
+                        <div class="col-3">
+                            <div class="row" style="width: max-content;">
+                                <input type="radio"
+                                       id="radioByVerRange"
+                                       name="byRadio"
+                                       value="verRange">
+                                <label class="ml-2 mb-0" for="radioByVerRange">Version range</label>
+                            </div>
+
+                            <div class="row" style="width: max-content;">
+                                <input type="radio"
+                                       id="radioByAbsDate"
+                                       name="byRadio"
+                                       value="abs">
+                                <label class="ml-2 mb-0" for="radioByAbsDate">Absolute date</label>
+                            </div>
+
+                            <div class="row" style="width: max-content;">
+                                <input type="radio"
+                                       id="radioByRelDate"
+                                       name="byRadio"
+                                       value="rel">
+                                <label class="ml-2 mb-0" for="radioByRelDate">Relative date</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="row mt-4" id="absDatePicker" style="display: none;">
+                        <div class="row d-flex">
+                            <p style="width: max-content;" class="mb-0 mr-2"><input type="checkbox" id="enableAfterAbsDate"> After</p>
+                            <input id="afterAbsDate" type="date" disabled>
+                        </div>
+                        <div class="row d-flex mt-2">
+                            <p style="width: max-content;" class="mb-0 mr-2"><input type="checkbox" id="enableBeforeAbsDate"> Before</p>
+                            <input id="beforeAbsDate" type="date" disabled>
+                        </div>
+                    </div>
+                    <div class="row mt-5" id="relDatePicker" style="display: none;">
+                        <p style="width: max-content">Last <input style="width: 100px;" type="number" id="relDate" min="0"> days</p>
+                    </div>
+                    <div id="verRangePicker" class="row mt-4"  style="display: none;">
+                        <input type="text" id="verRange" placeholder="Enter range">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <a class="btn btn-primary btn-icon-split mt-4" id="saveButton">
+                    <span class="text">Save</span>
+                </a>
+
+                <a class="btn btn-primary btn-icon-split mt-4 ml-4" id="cancelButton">
+                    <span class="text">Cancel</span>
+                </a>
+            </div>
+
+            <p style="color: red; display: none;" class="text font-weight-bold ml-2 mt-2" id="createRuleErrorMes">Error! Invalid input</p>
+        </div>
+    </div>
+
+    <style>
+        input {
+            outline: none;
+        }
+    </style>
+
+    <script>
+        function editRule(componentId, ruleName) {
+            const absDatePicker = document.getElementById('absDatePicker');
+            const relDatePicker = document.getElementById('relDatePicker');
+            const verRangePicker = document.getElementById('verRangePicker');
+
+            let byChoice = null
+
+            function hidePickers() {
+                absDatePicker.style.display = 'none'
+                relDatePicker.style.display = 'none'
+                verRangePicker.style.display = 'none'
+            }
+
+            document.getElementById('radioByVerRange').onclick = () => {
+                byChoice = "verRange"
+
+                hidePickers()
+                verRangePicker.style.display = "block"
+            }
+
+            document.getElementById('radioByAbsDate').onclick = () => {
+                byChoice = "absDate"
+
+                hidePickers()
+                absDatePicker.style.display = "block"
+            }
+
+            document.getElementById('radioByRelDate').onclick = () => {
+                byChoice = "relDate"
+
+                hidePickers()
+                relDatePicker.style.display = "block"
+            }
+
+            document.getElementById('enableAfterAbsDate').onclick = () => {
+                document.getElementById('afterAbsDate').disabled = !document.getElementById('afterAbsDate').disabled
+            }
+
+            document.getElementById('enableBeforeAbsDate').onclick = () => {
+                document.getElementById('beforeAbsDate').disabled = !document.getElementById('beforeAbsDate').disabled
+            }
+
+            const initialRule = JSON.parse(httpGet('/api/rules/' + ruleName));
+
+            function loadSettings() {
+                document.getElementById('name').value = initialRule["name"]
+
+                if (initialRule["putLifecycleStage"] === "active") {
+                    document.getElementById('lifecycleStageActive').click()
+                } else if (initialRule["putLifecycleStage"] === "maintenance") {
+                    document.getElementById('lifecycleStageMaintenance').click()
+                } else if (initialRule["putLifecycleStage"] === "unsupported") {
+                    document.getElementById('lifecycleStageUnsupported').click()
+                }
+
+                if (initialRule["dateFormat"] === "abs") {
+                    document.getElementById('radioByAbsDate').click()
+
+                    if (initialRule["minDate"] != null) {
+                        document.getElementById('enableAfterAbsDate').click()
+                        document.getElementById('afterAbsDate').value = initialRule["minDate"]
+                    }
+
+                    if (initialRule["maxDate"] != null) {
+                        document.getElementById('enableBeforeAbsDate').click()
+                        document.getElementById('beforeAbsDate').value = initialRule["maxDate"]
+                    }
+                } else if (initialRule["dateFormat"] === "rel") {
+                    document.getElementById('radioByRelDate').click()
+                    document.getElementById('relDate').value = initialRule["timeGap"]
+                } else if (initialRule["versionRange"] != null) {
+                    document.getElementById('radioByVerRange').click()
+                    document.getElementById('verRange').value = initialRule["versionRange"]
+                }
+            }
+
+            loadSettings()
+
+            function saveSettings() {
+                if (byChoice == null) return false
+
+                let url = "../api/rules/" + ruleName + "?"
+
+                if (document.getElementById('lifecycleStageActive').checked) url += "&newPutLifecycleStage=active"
+                else if (document.getElementById('lifecycleStageMaintenance').checked) url += "&newPutLifecycleStage=maintenance"
+                else if (document.getElementById('lifecycleStageUnsupported').checked) url += "&newPutLifecycleStage=unsupported"
+
+                if (byChoice === "verRange") {
+                    url += '&newDateFormat=null'
+                    url += '&newVersionRange=' + document.getElementById('verRange').value
+                } else if (byChoice === "absDate") {
+                    url += '&newDateFormat=abs'
+                    if (document.getElementById('enableAfterAbsDate').checked) {
+                        url += "&newMinDate=" + document.getElementById('afterAbsDate').value
+                    }
+                    if (document.getElementById('enableBeforeAbsDate').checked) {
+                        url += "&newMaxDate=" + document.getElementById('beforeAbsDate').value
+                    }
+                } else {
+                    if (+document.getElementById('relDate').value < 0) return false
+                    url += '&newDateFormat=rel'
+                    url += "&newTimeGap=" + document.getElementById('relDate').value
+                }
+
+                if (document.getElementById('name').value !== initialRule["name"]) {
+                    url += '&newName=' + document.getElementById("name").value
+                }
+
+                return httpPut(encodeURI(url)) != null;
+            }
+
+            document.getElementById('saveButton').addEventListener('click', () => {
+                if (!saveSettings()) {
+                    document.getElementById('createRuleErrorMes').style.display = 'block'
+                } else {
+                    document.getElementById('editRuleBlock').style.display = 'none'
+                    document.getElementById("columnRight").innerHTML = displayRulesBlock
+                    displayRules(componentId, true)
+                }
+            })
+
+            document.getElementById('cancelButton').addEventListener('click', () => {
+                document.getElementById('editRuleBlock').style.display = 'none'
+                document.getElementById("columnRight").innerHTML = displayRulesBlock
+                displayRules(componentId, true)
+            })
+
+            document.getElementById('editRuleBlock').style.display = 'block'
+        }
+    </script>
+</div>

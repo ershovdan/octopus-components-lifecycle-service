@@ -1,0 +1,21 @@
+{
+  "id": "component1",
+  "name": "aaa",
+  "componentOwner": "abiba",
+  "system": [
+    "NONE"
+  ],
+  "clientCode": null,
+  "releasesInDefaultBranch": true,
+  "solution": false,
+  "parentComponent": null,
+  "securityChampion": null,
+  "releaseManager": "abiba",
+  "distribution": {
+    "explicit": false,
+    "external": true,
+    "securityGroups": {
+      "read": []
+    }
+  }
+}

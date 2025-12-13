@@ -1,0 +1,89 @@
+{
+  "realm": "realm1",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "my-spring-client",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "my-client-secret",
+      "serviceAccountsEnabled": true,
+      "redirectUris": [
+        "http://localhost:8080/login/oauth2/code/keycloak"
+      ],
+      "webOrigins": [
+        "http://localhost:8080"
+      ],
+      "protocol": "openid-connect",
+      "protocolMappers": [
+        {
+          "name": "client-roles-mapper",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-client-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String",
+            "usermodel.clientRoleMapping.clientId": "my-spring-client"
+          }
+        }
+      ]
+    }
+  ],
+  "roles": {
+    "client": {
+      "my-spring-client": [
+        {
+          "name": "canEdit",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "my-spring-client"
+        }
+      ]
+    }
+  },
+  "users": [
+    {
+      "username": "user",
+      "enabled": true,
+      "emailVerified": false,
+      "firstName": "Test",
+      "lastName": "User",
+      "email": "testuser@example.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123",
+          "temporary": false
+        }
+      ],
+      "clientRoles": {
+        "my-spring-client": []
+      }
+    },
+    {
+      "username": "mershov",
+      "enabled": true,
+      "emailVerified": false,
+      "firstName": "Teffst",
+      "lastName": "Usffer",
+      "email": "sdfsdf@example.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Password123",
+          "temporary": false
+        }
+      ],
+      "clientRoles": {
+        "my-spring-client": [
+          "canEdit"
+        ]
+      }
+    }
+  ]
+}

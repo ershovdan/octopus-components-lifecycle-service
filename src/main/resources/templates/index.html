@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Components Lifecycle Service</title>
+
+    <link th:href="@{/css/compocaste.css}" href="/css/compocaste.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/datatables.min.css}" href="/css/datatables.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+    <div id="displayRulesBlock" style="display: none;">
+        <th:block th:include="/display_rules_block"></th:block>
+    </div>
+
+    <div id="createRuleBlock" style="display: none;">
+        <th:block th:include="/create_rule_block"></th:block>
+    </div>
+
+    <div id="editRuleBlock" style="display: none;">
+        <th:block th:include="/edit_rule_block"></th:block>
+    </div>
+
+    <p style="display: none;" th:text="${canEdit}" id="canEdit"></p>
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <th:block th:include="/sidebar_block"></th:block>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <div class="d-sm-flex w-50 align-items-center justify-content-between mb-4 mt-4">
+                        <h1 class="h3 mb-0 text-gray-800">Components Rules</h1>
+                    </div>
+
+                    <div class="w-100">
+                        <div class="d-flex flex-row-reverse float-right">
+                            <img id="logout_button" th:src="@{img/logout.png}" class="logout_button" height="25" width="25">
+                            <p class="h5 mb-0 mr-2" th:text="${username}" id="username"></p>
+                        </div>
+                    </div>
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <!-- Content Row -->
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="col">
+                                <div class="row w-100">
+                                    <div class="col-auto mt-2 pl-4">
+                                        <label class="switch" for="show_my">
+                                            <input type="checkbox" id="show_my" style="display: none;"/>
+                                            <div class="slider round"></div>
+                                        </label>
+                                    </div>
+                                    <p class="col-8 mt-2 pl-0 mr-0 p-0 w-100">Show only my components</p>
+                                </div>
+                                <div class="row">
+                                    <table id="mainTable" class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th id="component_th">Component</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="columnRight" class="col-8">
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+</body>
+
+</html>
+
+<style>
+    #mainTable_wrapper {
+        width: 100%;
+    }
+
+    .selected-component {
+        background-color: #ececec !important;
+    }
+
+    .hovered-comp-cell {
+        background-color: #ececec !important;
+        cursor: pointer;
+    }
+
+    .draggable {
+        cursor: grab;
+    }
+
+    .slider {
+        background-color: #858796;
+        bottom: 0;
+        cursor: pointer;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transition: .4s;
+    }
+
+    .slider:before {
+        background-color: #fff;
+        bottom: 4px;
+        content: "";
+        height: 18px;
+        left: 4px;
+        position: absolute;
+        transition: .4s;
+        width: 18px;
+    }
+
+    input:checked + .slider {
+        background-color: #4e73df;
+    }
+
+    input:checked + .slider:before {
+        transform: translateX(17px);
+    }
+
+    .slider.round {
+        border-radius: 25px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+    .switch {
+        display: inline-block;
+        height: 25px;
+        position: relative;
+        width: 45px;
+    }
+</style>
+
+<script th:src="@{/js/compocaste-base.js}"></script>
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script th:src="@{/js/datatables.min.js}"></script>
+<script>
+    const username = document.getElementById('username').innerHTML
+    const canEdit = document.getElementById('canEdit').innerHTML === "true"
+
+    document.getElementById('canEdit').remove()
+
+    const displayRulesBlock = document.getElementById('displayRulesBlock').innerHTML
+    document.getElementById('displayRulesBlock').remove()
+
+    const createRuleBlock = document.getElementById('createRuleBlock').innerHTML
+    document.getElementById('createRuleBlock').remove()
+
+    const editRuleBlock = document.getElementById('editRuleBlock').innerHTML
+    document.getElementById('editRuleBlock').remove()
+
+    document.getElementById("components_li").classList.add("active")
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const table = new DataTable("#mainTable", {
+            paging: true,
+            searching: true,
+            info: false,
+            pageLength: 16,
+            lengthChange: false,
+            columns: [
+                {title: "Component"},
+            ]
+        })
+
+        function checkButtons() {
+            for (let cell of document.getElementsByClassName("sorting_1")) {
+                cell.onclick = () => {
+                    for (let c of document.getElementsByClassName("sorting_1")) {
+                        c.classList.remove("selected-component")
+                    }
+
+                    eraseCookie("tableIsOpen");
+                    eraseCookie("filterBuildsSelect")
+
+                    cell.classList.add("selected-component")
+
+                    document.getElementById("columnRight").innerHTML = displayRulesBlock
+                    displayRules(cell.innerHTML, canEdit)
+                }
+            }
+        }
+
+        function buildMainTable(showMy) {
+            table.clear();
+
+            if (showMy) {
+                for (let comp of JSON.parse(httpGet("/api/components?owner=" + username))) table.row.add([comp])
+            } else {
+                for (let comp of JSON.parse(httpGet("/api/components"))) table.row.add([comp])
+            }
+
+            table.draw()
+
+            document.getElementById("dt-search-0").addEventListener('input', () => checkButtons())
+            document.getElementById('component_th').addEventListener('click', () => table.on('draw.dt', () => checkButtons()))
+            table.on('page.dt', () => checkButtons())
+            checkButtons()
+
+            $('#mainTable tbody').on('mouseenter', 'td', function () {
+                if (table.cell(this).index()["column"] === 0) {
+                    $(this).addClass('hovered-comp-cell')
+                }
+            }).on('mouseleave', 'td', function () {
+                $(this).removeClass('hovered-comp-cell')
+            })
+        }
+
+        buildMainTable(false)
+
+        document.getElementById("show_my").addEventListener('change', () => {
+            buildMainTable(document.getElementById("show_my").checked)
+        })
+    })
+</script>

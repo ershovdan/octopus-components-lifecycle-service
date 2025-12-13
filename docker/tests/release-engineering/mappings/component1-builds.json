@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/release-engineering/3/admin/component/component1/builds"
+  },
+  "response": {
+    "status": 200,
+    "bodyFileName": "component1-builds.json",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
