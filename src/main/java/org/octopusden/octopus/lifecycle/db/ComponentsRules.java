@@ -9,6 +9,8 @@ import java.util.List;
 public class ComponentsRules {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable=false, updatable=false)
+    private Integer id;
 
     @Column(nullable=false)
     public String componentId;
