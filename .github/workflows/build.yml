@@ -16,16 +16,16 @@ jobs:
           java-version: '21'
           distribution: temurin
 
-      - name: Set up Docker
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
       - name: Start services via Docker Compose
         run: |
-          docker-compose -f docker/tests/docker-compose.yml up -d
+          docker compose -f docker/tests/docker-compose.yml up -d
 
       - name: Build and test with Gradle
         run: ./gradlew clean build
 
       - name: Stop Docker Compose
         if: always()
-        run: docker-compose -f docker/tests/docker-compose.yml down
+        run: docker compose -f docker/tests/docker-compose.yml down
