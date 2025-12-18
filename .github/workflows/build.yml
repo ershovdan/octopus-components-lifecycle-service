@@ -3,7 +3,7 @@ name: Gradle Compile & UT
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  start-services:
+  run-build-and-deploy-with-services:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -14,17 +14,17 @@ jobs:
       - name: Start Docker Compose services
         run: |
           docker compose -f docker/tests/docker-compose.yml up -d
-          echo "Waiting for Postgres to be ready..."
-          docker compose -f docker/tests/docker-compose.yml exec -T db sh -c "until pg_isready -U postgres; do sleep 1; done"
-          echo "All services should be up."
-    outputs:
-      services-ready: true
+          docker compose -f docker/tests/docker-compose.yml exec -T db sh -c \
+          "until pg_isready -U postgres; do sleep 1; done"
 
-  run-build-and-deploy:
-    needs: start-services
-    uses: octopusden/octopus-base/.github/workflows/common-java-gradle-build.yml@v2.1.10
-    with:
-      flow-type: hybrid
-      java-version: '21'
-      docker-image: components-lifecycle-service
-      skip-tests: false
+      - name: Run Gradle build via reusable workflow
+        uses: octopusden/octopus-base/.github/workflows/common-java-gradle-build.yml@v2.1.10
+        with:
+          flow-type: hybrid
+          java-version: '21'
+          docker-image: components-lifecycle-service
+          skip-tests: false
+
+      - name: Stop Docker Compose
+        if: always()
+        run: docker compose -f docker/tests/docker-compose.yml down
