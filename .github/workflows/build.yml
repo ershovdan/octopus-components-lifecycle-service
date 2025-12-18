@@ -22,8 +22,6 @@ jobs:
       - name: Start services via Docker Compose
         run: |
           docker-compose -f docker/tests/docker-compose.yml up -d
-          # Wait for Postgres (or other DB) to be ready
-          docker-compose -f docker/tests/docker-compose.yml exec -T db sh -c "until pg_isready -U \$POSTGRES_USER; do sleep 1; done"
 
       - name: Build and test with Gradle
         run: ./gradlew clean build
