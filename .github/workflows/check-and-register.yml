@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-    name: "check-and-register.yml"
     uses: octopusden/octopus-base/.github/workflows/common-check-and-register-release.yml@v2.1.10
     if:  "${{ github.event.workflow_run.conclusion == 'success' }}"
     with:
