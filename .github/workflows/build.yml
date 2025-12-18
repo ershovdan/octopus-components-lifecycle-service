@@ -3,24 +3,10 @@ name: Gradle Compile & UT
 on: [push, pull_request, workflow_dispatch]
 
 jobs:
-  docker-compose:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Start Docker services
-        run: |
-          docker compose -f docker/tests/docker-compose.yml up -d
   run-build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Start Docker services
-        run: docker compose -f docker/tests/docker-compose.yml up -d
-      - uses: octopusden/octopus-base/.github/workflows/common-java-gradle-build.yml@v2.1.10
-        with:
-          flow-type: hybrid
-          java-version: '21'
-          docker-image: components-lifecycle-service
-          skip-tests: false
+    uses: octopusden/octopus-base/.github/workflows/common-java-gradle-build.yml@v2.1.10
+    with:
+      flow-type: hybrid
+      java-version: '21'
+      docker-image: components-lifecycle-service
+      skip-tests: false
