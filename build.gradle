@@ -3,6 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '3.5.4'
 	id 'io.spring.dependency-management' version '1.1.7'
     id 'com.bmuschko.docker-java-application'
+    id 'com.avast.gradle.docker-compose' version '0.17.0'
 }
 
 group = 'org.octopusden.octopus'
@@ -84,4 +85,11 @@ dockerBuildImage {
     dependsOn bootJar
 }
 
-
+dockerCompose {
+//    dockerExecutable = "/opt/homebrew/bin/docker"
+    useComposeFiles = ['docker/tests/docker-compose.yml']
+    removeContainers = true       // remove containers after stopping
+    removeVolumes = true          // remove volumes after stopping
+    isRequiredBy(tasks.test)      // ensures tests run after Compose services are up
+    waitForTcpPorts = true        // waits for TCP ports defined in compose healthchecks
+}
