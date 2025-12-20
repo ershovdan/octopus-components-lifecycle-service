@@ -33,6 +33,11 @@ services:
       - ./release-engineering:/home/wiremock
     command: [ "--port=8081" ]
     restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8082/__admin" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   components-registry-service:
     image: wiremock/wiremock:3.13.1
     container_name: wiremock-components-registry
