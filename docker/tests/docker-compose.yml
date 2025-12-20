@@ -34,7 +34,7 @@ services:
     command: [ "--port=8081" ]
     restart: unless-stopped
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8082/__admin" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8081/__admin" ]
       interval: 10s
       timeout: 5s
       retries: 5
