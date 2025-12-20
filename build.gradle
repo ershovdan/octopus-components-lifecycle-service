@@ -86,7 +86,7 @@ dockerBuildImage {
 }
 
 dockerCompose {
-    dockerExecutable = "/opt/homebrew/bin/docker"
+//    dockerExecutable = "/opt/homebrew/bin/docker"
     useComposeFiles = ['docker/tests/docker-compose.yml']
     removeContainers = true       // remove containers after stopping
     removeVolumes = true          // remove volumes after stopping
