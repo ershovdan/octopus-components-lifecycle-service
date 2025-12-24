@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class BuildsManager {
-    @Value("${app.releaseEngineeringUrl}")
+    @Value("${app.releaseEngineering.baseUrl}${app.releaseEngineering.path}")
     public String releaseEngineeringUrl;
 
     @Autowired

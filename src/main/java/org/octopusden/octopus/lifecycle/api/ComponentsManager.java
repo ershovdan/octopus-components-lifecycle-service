@@ -20,10 +20,7 @@ import java.util.*;
 
 @Service
 public class ComponentsManager {
-    @Value("${app.releaseEngineeringUrl}")
-    public String releaseEngineeringUrl;
-
-    @Value("${app.componentsRegistryServiceUrl}")
+    @Value("${app.componentsRegistryService.baseUrl}${app.componentsRegistryService.path}")
     public String componentsRegistryServiceUrl;
 
     @Autowired
