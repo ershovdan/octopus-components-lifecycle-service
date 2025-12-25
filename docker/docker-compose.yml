@@ -14,7 +14,7 @@ services:
       - ./realms:/opt/keycloak/data/import
   db:
     image: postgres:15
-    container_name: postgres_db
+    container_name: cls-postgres
     restart: always
     environment:
       POSTGRES_DB: postgres

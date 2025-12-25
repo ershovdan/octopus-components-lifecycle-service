@@ -95,16 +95,24 @@ java -jar build/libs/components-lifecycle-service-0.0.1-SNAPSHOT.jar
 ## Configuration
 
 The application can be configured via:
-- `src/main/resources/application.properties`
 - Environment variables
 - Command-line arguments: `./gradlew bootRun --args='--server.port=9090'`
 
-### Key Configuration Properties
+### Key Configuration Arguments
 
-- **Server Port**: `server.port=8080`
-- **Database**: PostgreSQL configuration in application.properties
+- **Server Port**: `server.port=<server-port>`
+- **PostgreSQL url**: `spring.datasource.url=jdbc:postgresql://<host>:<port>/<db-name>`
+- **PostgreSQL username**: `spring.datasource.username=<username>`
+- **PostgreSQL password**: `spring.datasource.password=<password>`
+- **Release Engineering Url**: `app.releaseEngineering.baseUrl=<baseUrl>`
+- **Components RegistryService Url**: `app.componentsRegistryService.baseUrl=<baseUrl>`
 - **Security**: OAuth2/Keycloak integration
 - **External APIs**: Release Engineering and Components Registry Service URLs
+
+### Keycloak
+As a temporary solution keycloak can be configurated only in `application.properties` file
+
+
 
 ## Development
 

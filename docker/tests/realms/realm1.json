@@ -66,12 +66,12 @@
       }
     },
     {
-      "username": "ersh",
+      "username": "user2",
       "enabled": true,
       "emailVerified": false,
-      "firstName": "Teffst",
-      "lastName": "Usffer",
-      "email": "sdfsdf@example.com",
+      "firstName": "Test2",
+      "lastName": "User2",
+      "email": "testuser2@example.com",
       "credentials": [
         {
           "type": "password",
