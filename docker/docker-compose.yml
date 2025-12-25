@@ -17,9 +17,9 @@ services:
     container_name: cls-postgres
     restart: always
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cls
+      POSTGRES_USER: cls_user
+      POSTGRES_PASSWORD: cls_password
     ports:
       - "5432:5432"
     volumes:
