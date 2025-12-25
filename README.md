@@ -104,14 +104,11 @@ The application can be configured via:
 - **PostgreSQL url**: `spring.datasource.url=jdbc:postgresql://<host>:<port>/<db-name>`
 - **PostgreSQL username**: `spring.datasource.username=<username>`
 - **PostgreSQL password**: `spring.datasource.password=<password>`
-- **Release Engineering Url**: `app.releaseEngineering.baseUrl=<baseUrl>`
-- **Components RegistryService Url**: `app.componentsRegistryService.baseUrl=<baseUrl>`
-- **Security**: OAuth2/Keycloak integration
-- **External APIs**: Release Engineering and Components Registry Service URLs
+- **External API - Release Engineering Url**: `app.releaseEngineering.baseUrl=<baseUrl>`
+- **External API - Components RegistryService Url**: `app.componentsRegistryService.baseUrl=<baseUrl>`
 
 ### Keycloak
 As a temporary solution keycloak can be configurated only in `application.properties` file
-
 
 
 ## Development

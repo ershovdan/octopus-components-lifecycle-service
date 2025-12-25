@@ -12,17 +12,16 @@ services:
       - "8083:8080"
     volumes:
       - ./realms:/opt/keycloak/data/import
-      - ./init-scripts:/docker-entrypoint-initdb.d
   postgres:
     image: postgres:15
     container_name: cls-postgres-test
     restart: always
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: cls_user
+      POSTGRES_PASSWORD: cls_password
+      POSTGRES_DB: cls
     ports:
-      - "5432:5432"
+      - "5555:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
   release-engineering:
