@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Components Lifecycle Service</title>
+
+    <link th:href="@{/css/compocaste.css}" href="/css/compocaste.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/datatables.min.css}" href="/css/datatables.css" rel="stylesheet">
+</head>
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <th:block th:insert="~{/sidebar_block}"></th:block>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <div class="d-sm-flex w-25 align-items-center justify-content-between mb-4 mt-4">
+                        <h1 class="h3 mb-0 text-gray-800">Global Rules</h1>
+                    </div>
+
+                    <div class="w-100">
+                        <div class="d-flex flex-row-reverse float-right">
+                            <img id="logout_button" th:src="@{../img/logout.png}" class="logout_button" height="25" width="25">
+                            <p class="h5 mb-0 mr-2" th:text="${username}" id="username"></p>
+                        </div>
+                    </div>
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <!-- Content Row -->
+
+                    <div class="h2">GLOBALLY <span id="status_span" class="font-weight-bold"></span> IF</div>
+
+                    <div class="row">
+                        <div class="container m-0 pl-4">
+                            <p class="h5">DATE FILTER</p>
+                            <div class="row ml-3">
+                                <div class="col-3">
+                                    <div class="row">
+                                        <input type="radio"
+                                               id="timeRadioNone"
+                                               name="dateRadio"
+                                               value="none">
+                                        <label class="ml-2 mb-0" for="timeRadioNone">None</label>
+                                    </div>
+
+                                    <div class="row">
+                                        <input type="radio"
+                                               id="timeRadioAbs"
+                                               name="dateRadio"
+                                               value="abs">
+                                        <label class="ml-2 mb-0" for="timeRadioAbs">Absolute</label>
+                                    </div>
+
+                                    <div class="row">
+                                        <input type="radio"
+                                               id="timeRadioRel"
+                                               name="dateRadio"
+                                               value="rel">
+                                        <label class="ml-2 mb-0" for="timeRadioRel">Relative</label>
+                                    </div>
+                                </div>
+                                <div class="col-5" id="absDatePicker" style="display: none;">
+                                    <div>
+                                        <p><input type="checkbox" id="enableAfterAbsDate"> After</p>
+                                        <input id="afterAbsDate" type="date" disabled>
+                                    </div>
+                                    <div class="mt-4">
+                                        <p><input type="checkbox" id="enableBeforeAbsDate"> Before</p>
+                                        <input id="beforeAbsDate" type="date" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-5" id="relDatePicker" style="display: none;">
+                                    <div>
+                                        <p>Last <input type="number" id="relDate" min="0"> days</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a class="btn btn-primary btn-icon-split mt-2 ml-2" id="saveButton">
+                                <span class="text">Save</span>
+                            </a>
+
+                            <a class="btn btn-primary btn-icon-split mt-2 ml-2" id="cancelButton">
+                                <span class="text">Cancel</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+</body>
+
+</html>
+
+<style>
+
+    input {
+        outline: none;
+    }
+</style>
+
+<script th:src="@{/js/compocaste-base.js}"></script>
+<script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+<script th:src="@{/js/datatables.min.js}"></script>
+<script th:inline="javascript">
+    const contextPath = /*[[${contextPath}]]*/ '';
+    window.contextPath = contextPath;
+
+    const status = new URLSearchParams(document.location.search).get("status").toUpperCase()
+
+    function loadSettings() {
+        let settings
+        if (status === "ACTIVE") {
+            settings = JSON.parse(httpGet(contextPath + "/api/rules/globalActive"))
+        } else if (status === "MAINTENANCE") {
+            settings = JSON.parse(httpGet(contextPath + "/api/rules/globalMaintenance"))
+        }
+
+        if (settings["dateFormat"] == null) {
+            document.getElementById('timeRadioNone').checked = true
+        } else if (settings["dateFormat"] === "abs") {
+            document.getElementById('timeRadioAbs').checked = true
+            document.getElementById('absDatePicker').style.display = 'block'
+
+            if (settings["minDate"] != null) {
+                document.getElementById("enableAfterAbsDate").checked = true
+                document.getElementById("afterAbsDate").disabled = false
+                document.getElementById("afterAbsDate").value = settings["minDate"]
+            }
+            if (settings["maxDate"] != null) {
+                document.getElementById("enableBeforeAbsDate").checked = true
+                document.getElementById("beforeAbsDate").disabled = false
+                document.getElementById("beforeAbsDate").value = settings["maxDate"]
+            }
+        } else if (settings["dateFormat"] === "rel") {
+            document.getElementById('timeRadioRel').checked = true
+            document.getElementById('relDatePicker').style.display = 'block'
+
+            if (settings["timeGap"] != null) {
+                document.getElementById("relDate").value = settings["timeGap"]
+            }
+        }
+
+
+        console.log(settings)
+    }
+
+    if (status === "ACTIVE") {
+        document.getElementById('status_span').innerHTML = status
+        document.getElementById('status_span').classList.add('text-success')
+    } else if (status === "MAINTENANCE") {
+        document.getElementById('status_span').innerHTML = status
+        document.getElementById('status_span').classList.add('text-info')
+    }
+
+    loadSettings()
+
+    document.getElementById('timeRadioNone').addEventListener('click', () => {
+        document.getElementById('relDatePicker').style.display = 'none'
+        document.getElementById('absDatePicker').style.display = 'none'
+    })
+    document.getElementById('timeRadioAbs').addEventListener('click', () => {
+        document.getElementById('relDatePicker').style.display = 'none'
+        document.getElementById('absDatePicker').style.display = 'block'
+    })
+    document.getElementById('timeRadioRel').addEventListener('click', () => {
+        document.getElementById('absDatePicker').style.display = 'none'
+        document.getElementById('relDatePicker').style.display = 'block'
+    })
+
+    document.getElementById('enableAfterAbsDate').addEventListener('click', () => {
+        document.getElementById('afterAbsDate').disabled = !document.getElementById('enableAfterAbsDate').checked
+    })
+    document.getElementById('enableBeforeAbsDate').addEventListener('click', () => {
+        document.getElementById('beforeAbsDate').disabled = !document.getElementById('enableBeforeAbsDate').checked
+    })
+
+    function saveSettings() {
+        console.log(document.getElementById('afterAbsDate').value)
+
+        let newSettings = "?"
+        if (document.getElementById('timeRadioNone').checked) {
+            newSettings += 'newDateFormat=null'
+        } else if (document.getElementById('timeRadioAbs').checked) {
+            if (!document.getElementById('afterAbsDate').value && !document.getElementById('beforeAbsDate').value) return false
+
+            newSettings += 'newDateFormat=abs'
+
+            if (document.getElementById('enableAfterAbsDate').checked) {
+                newSettings += "&newMinDate=" + document.getElementById('afterAbsDate').value
+            } else {
+                newSettings += "&newMinDate=null"
+            }
+
+            if (document.getElementById('enableBeforeAbsDate').checked) {
+                newSettings += "&newMaxDate=" + document.getElementById('beforeAbsDate').value
+            } else {
+                newSettings += "&newMaxDate=null"
+            }
+
+        } else if (document.getElementById('timeRadioRel').checked) {
+            if (!document.getElementById('relDate').value) return false
+
+            newSettings += 'newDateFormat=rel'
+            newSettings += "&newTimeGap=" + document.getElementById('relDate').value
+        }
+
+        let baseUrl
+        if (status === "ACTIVE") {
+            baseUrl = contextPath + "/api/rules/globalActive"
+        } else if (status === "MAINTENANCE") {
+            baseUrl = contextPath + "/api/rules/globalMaintenance"
+        }
+
+        const fullUrl = encodeURI(baseUrl + newSettings)
+        console.log('Saving settings to:', fullUrl)
+
+        const result = httpPut(fullUrl)
+
+        if (result == null) {
+            console.error('Failed to save settings. httpPut returned null')
+            return false
+        }
+
+        // Check if result is an error response
+        try {
+            const parsed = JSON.parse(result)
+            if (parsed.status && parsed.status >= 400) {
+                console.error('Server returned error:', parsed)
+                return false
+            }
+        } catch (e) {
+            // If it's not JSON, that's okay - might be empty success response
+            console.log('Save response:', result)
+        }
+
+        console.log('Settings saved successfully')
+        return true
+    }
+
+    document.getElementById('saveButton').addEventListener('click', () => {
+        if (saveSettings()) {
+            window.location.href = contextPath + "/globalRules"
+        } else {
+            alert('Failed to save settings. Please check the browser console for details.')
+        }
+    })
+
+    document.getElementById('cancelButton').addEventListener('click', () => {
+        window.location.href = contextPath + "/globalRules"
+    })
+
+</script>

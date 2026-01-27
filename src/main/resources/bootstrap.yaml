@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: components-lifecycle-service
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URI:http://f1-config-server-test:8080}
+      fail-fast: false
+      token: ${VAULT_TOKEN:}
+      # Set label to empty string to prevent /master from being appended
+      label: ""
+      # Use only the first profile for Config Server requests
+      profile: ${SPRING_PROFILES_ACTIVE:cloud-qa}
+      retry:
+        multiplier: 2
+        max-interval: 60000
+        max-attempts: 100
+        initial-interval: 1000

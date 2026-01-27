@@ -1,0 +1,93 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+    id 'com.bmuschko.docker-spring-boot-application' version "${dockerPluginVersion}"
+}
+
+group = 'org.octopusden.octopus'
+// Version is set in gradle.properties or can be overridden via -Pversion=...
+// Don't hardcode it here to allow override (matches msc pattern)
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(Integer.parseInt(javaVersion))
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springdocVersion}"
+    implementation 'com.github.ben-manes.caffeine:caffeine'
+
+    implementation "org.octopusden.octopus-cloud-commons:octopus-security-common:${octopusSecurityCommonVersion}"
+
+
+    // JSON processing
+    implementation 'com.google.code.gson:gson'
+
+    // Apache Commons
+    implementation "commons-io:commons-io:${commonsIoVersion}"
+
+    // Maven versioning
+    implementation "org.apache.maven:maven-artifact:${mavenArtifactVersion}"
+
+    // Octopus dependencies - you may need to configure your Maven repository
+    implementation "org.octopusden.octopus.releng:versions-api:${octopusVersionsApiVersion}"
+
+    runtimeOnly 'org.postgresql:postgresql'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// Docker configuration - matches msc/build.gradle.kts pattern
+ext {
+    // Support both property name formats
+    dockerRegistry = project.findProperty('docker.registry') ?:
+                     project.findProperty('dockerRegistry') ?:
+                     System.getenv('DOCKER_REGISTRY') ?:
+                     'docker.io'
+    octopusGithubDockerRegistry = project.findProperty('octopus.github.docker.registry') ?:
+                                  project.findProperty('octopusGithubDockerRegistry') ?:
+                                  System.getenv('OCTOPUS_GITHUB_DOCKER_REGISTRY') ?:
+                                  dockerRegistry
+}
+
+docker {
+    springBootApplication {
+        baseImage = "${dockerRegistry}/eclipse-temurin:21-jre"
+        ports = [8080]
+        images = ["${octopusGithubDockerRegistry}/octopusden/${project.name}:${project.version}".toString()]
+    }
+}
+
+// Ensure jar task is disabled (only bootJar should be used)
+tasks.named('jar') {
+    enabled = false
+}
+
