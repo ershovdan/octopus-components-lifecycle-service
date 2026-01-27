@@ -38,7 +38,7 @@ Interactive API documentation is available via Swagger UI:
 
 **Production/Test:**
 ```
-https://f1-gateway-test.openwaygroup.com/components-lifecycle-service/swagger-ui.html
+https://f1-gateway-test.acme.com/components-lifecycle-service/swagger-ui.html
 ```
 
 **Local:**
