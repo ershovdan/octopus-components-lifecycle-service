@@ -50,9 +50,12 @@ public class LifecycleStageMatcher {
     }
 
     private boolean checkForVersionRange(Rule rule, String version) throws InvalidVersionSpecificationException {
-        VersionRange versionRange = VersionRange.createFromVersionSpec(rule.versionRange);
-        DefaultArtifactVersion v = new DefaultArtifactVersion(version);
-        return versionRange.containsVersion(v);
+        for (String vr : rule.versionRange) {
+            VersionRange versionRange = VersionRange.createFromVersionSpec(vr);
+            DefaultArtifactVersion v = new DefaultArtifactVersion(version);
+            if (versionRange.containsVersion(v)) return true;
+        }
+        return false;
     }
 
     private boolean checkRule(Rule rule, Build build, String version) throws InvalidVersionSpecificationException {

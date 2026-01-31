@@ -50,7 +50,7 @@ public class RulesManager {
 
     public ResponseEntity addRule(String componentId, String name, String type, String putLifecycleStage,
                                   Optional<String> dateFormat, Optional<String> minDate, Optional<String> maxDate,
-                                  Optional<String> timeGap, Optional<String> versionRange) throws IOException {
+                                  Optional<String> timeGap, Optional<List<String>> versionRange) throws IOException {
 
         if (!componentsManager.getComponents(Optional.empty(), Optional.empty()).contains(componentId)) {
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
@@ -59,7 +59,11 @@ public class RulesManager {
         if (!(type.equals("global") || type.equals("component") || type.equals("build"))) return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         if (!(putLifecycleStage.equals("active") || putLifecycleStage.equals("maintenance") || putLifecycleStage.equals("unsupported"))) return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         if ((dateFormat.isEmpty() || dateFormat.get().equals("null")) && versionRange.isEmpty()) return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
-        if (versionRange.isPresent() && !checkVersionRange(versionRange.get())) return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+
+        if (versionRange.isEmpty()) return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+        for (String vr : versionRange.get()) {
+            if (!checkVersionRange(vr)) return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+        }
 
         Rule rule = new Rule(name, type, putLifecycleStage);
 
@@ -107,13 +111,17 @@ public class RulesManager {
 
     public ResponseEntity changeRule(String ruleName, Optional<String> newName, Optional<String> newPutLifecycleStage,
                                      Optional<String> newDateFormat, Optional<String> newMinDate, Optional<String> newMaxDate,
-                                     Optional<String> newTimeGap, Optional<String> newVersionRange) {
+                                     Optional<String> newTimeGap, Optional<List<String>> newVersionRange) {
 
         if (newName.isPresent() && ruleRepository.existsByName(newName.get())) return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         if (newDateFormat.isPresent() && !(newDateFormat.get().equals("null") || newDateFormat.get().equals("abs") || newDateFormat.get().equals("rel"))) {
             return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
         }
-        if (newVersionRange.isPresent() && !checkVersionRange(newVersionRange.get())) return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+
+        if (newVersionRange.isEmpty()) return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+        for (String vr : newVersionRange.get()) {
+            if (!checkVersionRange(vr)) return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+        }
 
         Rule rule = ruleRepository.findByName(ruleName);
 

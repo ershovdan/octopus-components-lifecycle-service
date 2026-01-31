@@ -129,7 +129,7 @@ public class ApiController {
                                   @RequestParam(name = "minDate") Optional<String> minDate,
                                   @RequestParam(name = "maxDate") Optional<String> maxDate,
                                   @RequestParam(name = "timeGap") Optional<String> timeGap,
-                                  @RequestParam(name = "versionRange") Optional<String> versionRange) throws IOException {
+                                  @RequestParam(name = "versionRange") Optional<List<String>> versionRange) throws IOException {
 
         if (securityManager.getCanEdit()) {
             return rulesManager.addRule(componentId, name, type, putLifecycleStage, dateFormat, minDate, maxDate, timeGap, versionRange);
@@ -147,7 +147,7 @@ public class ApiController {
                            @RequestParam(name = "newMinDate") Optional<String> newMinDate,
                            @RequestParam(name = "newMaxDate") Optional<String> newMaxDate,
                            @RequestParam(name = "newTimeGap") Optional<String> newTimeGap,
-                           @RequestParam(name = "newVersionRange") Optional<String> newVersionRange) {
+                           @RequestParam(name = "newVersionRange") Optional<List<String>> newVersionRange) {
 
         if (securityManager.getCanEdit()) {
             return rulesManager.changeRule(ruleName, newName, newPutLifecycleStage, newDateFormat, newMinDate, newMaxDate, newTimeGap, newVersionRange);

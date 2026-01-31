@@ -82,8 +82,13 @@
                     <div class="row mt-5" id="relDatePicker" style="display: none;">
                         <p style="width: max-content">Last <input style="width: 100px;" type="number" id="relDate" min="0"> days</p>
                     </div>
-                    <div id="verRangePicker" class="row mt-4"  style="display: none;">
-                        <input type="text" id="verRange" placeholder="Enter range">
+                    <div id="verRangePicker" class="row mt-4"  style="display: none; flex-direction: column;">
+                        <div id="versionRangeFields" style="display: flex; flex-direction: column;">
+                            <input type="text" class="verRange" id="verRange1" placeholder="Enter range">
+                        </div>
+                        <div style="display: flex; justify-content: center;">
+                            <img id="addVerRange" th:src="@{img/add.png}" class="addVerRange" height="25" width="25">
+                        </div>
                     </div>
 
                 </div>
@@ -107,6 +112,14 @@
         input {
             outline: none;
         }
+
+        .verRange {
+            margin-top: 10px;
+        }
+
+        .addVerRange {
+            margin-top: 10px;
+        }
     </style>
 
     <script>
@@ -116,6 +129,8 @@
             const verRangePicker = document.getElementById('verRangePicker');
 
             let byChoice = null
+
+            let versionRangeCount = 1
 
             function hidePickers() {
                 absDatePicker.style.display = 'none'
@@ -129,7 +144,7 @@
                 byChoice = "verRange"
 
                 hidePickers()
-                verRangePicker.style.display = "block"
+                verRangePicker.style.display = "flex"
             }
 
             document.getElementById('radioByAbsDate').onclick = () => {
@@ -154,6 +169,14 @@
                 document.getElementById('beforeAbsDate').disabled = !document.getElementById('beforeAbsDate').disabled
             }
 
+            document.getElementById("addVerRange").onclick = () => {
+                versionRangeCount++
+                document.getElementById("versionRangeFields").insertAdjacentHTML(
+                    "beforeend",
+                    "<input class='verRange' type=\"text\" id=\"verRange" + versionRangeCount + "\" placeholder=\"Enter range\">"
+                )
+            }
+
             function saveSettings() {
                 if (byChoice == null) return false
 
@@ -166,7 +189,12 @@
 
                 if (byChoice === "verRange") {
                     url += '&dateFormat=null'
-                    url += '&versionRange=' + document.getElementById('verRange').value
+                    for (let i = 1; i <= versionRangeCount; i++) {
+                        if (document.getElementById('verRange' + i).value != "") {
+                            url += '&versionRange=' + document.getElementById('verRange' + i).value
+                        }
+                    }
+
                 } else if (byChoice === "absDate") {
                     url += '&dateFormat=abs'
                     if (document.getElementById('enableAfterAbsDate').checked) {

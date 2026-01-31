@@ -3,6 +3,7 @@ package org.octopusden.octopus.lifecycle.db;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Rule {
@@ -25,7 +26,7 @@ public class Rule {
     public LocalDate maxDate;
     public Integer timeGap;
 
-    public String versionRange;
+    public List<String> versionRange;
 
     public Rule() {}
 
