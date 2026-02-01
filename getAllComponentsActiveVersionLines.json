@@ -1,0 +1,1426 @@
+[
+  {
+    "component": "component1",
+    "active": "[1.3]"
+  },
+  {
+    "component": "way4streams",
+    "active": "[2.0]"
+  },
+  {
+    "component": "appl-ant",
+    "active": "[appl-ant.11.0]"
+  },
+  {
+    "component": "policymanager",
+    "active": "[policymanager.11.0]"
+  },
+  {
+    "component": "HCEAndroidSDK",
+    "active": "[HCEAndroidSDK.3]"
+  },
+  {
+    "component": "ufxcore",
+    "active": "[3.0.0]"
+  },
+  {
+    "component": "acquiring-rest-api",
+    "active": "[acquiring-rest-api.1.0]"
+  },
+  {
+    "component": "c-management",
+    "active": "[c-management.2.0]"
+  },
+  {
+    "component": "msgauth",
+    "active": "[msgauth.11.0]"
+  },
+  {
+    "component": "wrep",
+    "active": "[wrep-57.0]"
+  },
+  {
+    "component": "license",
+    "active": "[license.11.0]"
+  },
+  {
+    "component": "apollo-solution-belgowe",
+    "active": "[NeoSolutionApollo.4]"
+  },
+  {
+    "component": "3DSecure",
+    "active": "[1.2]"
+  },
+  {
+    "component": "way4-transaction-attributes-lib",
+    "active": "[1.1]"
+  },
+  {
+    "component": "POS-Management-Server",
+    "active": "[75]"
+  },
+  {
+    "component": "platform-commons",
+    "active": "[1.6]"
+  },
+  {
+    "component": "neo-kyc-agent-iam",
+    "active": "[NeoKYCAgentIAMQuickPayment.4]"
+  },
+  {
+    "component": "mcloud-clients-service",
+    "active": "[ClientsService.1]"
+  },
+  {
+    "component": "OpenwayProprietaryBusinessSpecificDataFormat",
+    "active": "[owbsdf-03.01]"
+  },
+  {
+    "component": "way4u-tf-api",
+    "active": "[way4u-tf-api.11.0]"
+  },
+  {
+    "component": "sysdb",
+    "active": "[sysdb.10.0, sysdb.11.1]"
+  },
+  {
+    "component": "nexto",
+    "active": "[core-4.0]"
+  },
+  {
+    "component": "pm_java",
+    "active": "[54.30]"
+  },
+  {
+    "component": "neo-mpos-bff-unibank",
+    "active": "[NeoMobilePosUnibank.4]"
+  },
+  {
+    "component": "Way4Analytics",
+    "active": "[0.1]"
+  },
+  {
+    "component": "ancs-ch-report-generator",
+    "active": "[ch-rep-gen-2.0]"
+  },
+  {
+    "component": "pipeengine",
+    "active": "[2.5]"
+  },
+  {
+    "component": "bpmutil",
+    "active": "[bpmutil.11.0]"
+  },
+  {
+    "component": "VoiceAuthTelescope",
+    "active": "[3]"
+  },
+  {
+    "component": "ic-api",
+    "active": "[4.7, 5.0, 5.1]"
+  },
+  {
+    "component": "ccm-tool",
+    "active": "[ccm-tool.1.0]"
+  },
+  {
+    "component": "CMTool",
+    "active": "[1.4]"
+  },
+  {
+    "component": "system-other",
+    "active": "[system-other.11.0]"
+  },
+  {
+    "component": "payment-methods-rest-service",
+    "active": "[payment-methods-rest-service.1.1]"
+  },
+  {
+    "component": "iPAS-Azericard",
+    "active": "[azericard-1]"
+  },
+  {
+    "component": "launcher",
+    "active": "[launcher.11.0]"
+  },
+  {
+    "component": "authentication-android-app",
+    "active": "[mCloudAndroidAuth.1.0]"
+  },
+  {
+    "component": "doc_dpcp",
+    "active": "[doc-3.62]"
+  },
+  {
+    "component": "TransactionSwitchKernel",
+    "active": "[1.1]"
+  },
+  {
+    "component": "vdep-tokenization",
+    "active": "[VdepTokenization.1.0]"
+  },
+  {
+    "component": "releng",
+    "active": "[8]"
+  },
+  {
+    "component": "sysdbext",
+    "active": "[sysdbext.2.0]"
+  },
+  {
+    "component": "ws_runtime_proxy",
+    "active": "[1.2]"
+  },
+  {
+    "component": "smsb",
+    "active": "[2.8, 3.0]"
+  },
+  {
+    "component": "TFStudio",
+    "active": "[ui-2.105]"
+  },
+  {
+    "component": "ws_runtime",
+    "active": "[1.5]"
+  },
+  {
+    "component": "WAY4WebTestingFramework",
+    "active": "[1]"
+  },
+  {
+    "component": "dictionary-service",
+    "active": "[NeoDictionary.4]"
+  },
+  {
+    "component": "appcommonext",
+    "active": "[appcommonext.11.0]"
+  },
+  {
+    "component": "appserver",
+    "active": "[1.7]"
+  },
+  {
+    "component": "hm-log-processor",
+    "active": "[1.0]"
+  },
+  {
+    "component": "way4u-application-parent",
+    "active": "[2.8]"
+  },
+  {
+    "component": "way4u-r2-tests",
+    "active": "[way4u-r2-tests.11.0]"
+  },
+  {
+    "component": "way4umessage",
+    "active": "[way4umessage.11.1]"
+  },
+  {
+    "component": "getver",
+    "active": "[2]"
+  },
+  {
+    "component": "intranet-adapter",
+    "active": "[intranet-adapter.11.0]"
+  },
+  {
+    "component": "dms-getver",
+    "active": "[dms-getver.0]"
+  },
+  {
+    "component": "poiinterface",
+    "active": "[poiinterface.11.0]"
+  },
+  {
+    "component": "mcloud-json-model",
+    "active": "[JsonModel.1]"
+  },
+  {
+    "component": "ccom",
+    "active": "[ccomcomponents-1]"
+  },
+  {
+    "component": "wwapi",
+    "active": "[wwapi-57.0]"
+  },
+  {
+    "component": "neo-kyc-unibank",
+    "active": "[NeoKYCUnibank.4]"
+  },
+  {
+    "component": "lm-utils",
+    "active": "[lm-utils.11.0]"
+  },
+  {
+    "component": "bpmservice",
+    "active": "[bpmservice.11.0]"
+  },
+  {
+    "component": "way4streams-api",
+    "active": "[way4streams-api-4]"
+  },
+  {
+    "component": "authentication-sdk",
+    "active": "[mCloudAuthSdk.1.0]"
+  },
+  {
+    "component": "hsm",
+    "active": "[hsm.11.0]"
+  },
+  {
+    "component": "mpos-apollo",
+    "active": "[apollo-mpos.1]"
+  },
+  {
+    "component": "tcpadapter",
+    "active": "[tcpadapter.11.0]"
+  },
+  {
+    "component": "servlet-adapter",
+    "active": "[servlet-adapter.11.0]"
+  },
+  {
+    "component": "neo-solution-quickpayments",
+    "active": "[NeoSolutionQuickP.1]"
+  },
+  {
+    "component": "atmm",
+    "active": "[atmm-50.0]"
+  },
+  {
+    "component": "moldindcon-ic-api",
+    "active": "[moldindcon-5.0]"
+  },
+  {
+    "component": "statistical-reports-domain",
+    "active": "[statistical-reports-1]"
+  },
+  {
+    "component": "kotlinFdbJdbc",
+    "active": "[kotlin-fdb-jdbc.1.0]"
+  },
+  {
+    "component": "neo-payment-service",
+    "active": "[NeoPayments.1]"
+  },
+  {
+    "component": "doc_system",
+    "active": "[doc-3.50]"
+  },
+  {
+    "component": "doc_cswe",
+    "active": "[doc-cswe-52.0.1]"
+  },
+  {
+    "component": "wb-moldindcon",
+    "active": "[moldindcon-2.15]"
+  },
+  {
+    "component": "smartnet-ic-api",
+    "active": "[smartnet-5.1]"
+  },
+  {
+    "component": "hce-ext-tokenization",
+    "active": "[ExtTokenization.1.0]"
+  },
+  {
+    "component": "iso20022engine",
+    "active": "[1.0]"
+  },
+  {
+    "component": "doc_sapi",
+    "active": "[doc-1.0]"
+  },
+  {
+    "component": "pentaho-reporting",
+    "active": "[pentaho-reporting.1.0]"
+  },
+  {
+    "component": "WWEditorModel",
+    "active": "[WWEditorModel-55.0.1]"
+  },
+  {
+    "component": "doc_dmp",
+    "active": "[doc-1.0]"
+  },
+  {
+    "component": "way4gate",
+    "active": "[2.6]"
+  },
+  {
+    "component": "owsem",
+    "active": "[6]"
+  },
+  {
+    "component": "DHConsumer",
+    "active": "[dh-consumer-2.1]"
+  },
+  {
+    "component": "configuration-rest-service",
+    "active": "[conf-rest-service.1.0]"
+  },
+  {
+    "component": "hsm-gateway-api",
+    "active": "[HSMGatewayAPI.1.0]"
+  },
+  {
+    "component": "MWB",
+    "active": "[1.3, 1.4, 1.5, 5.0]"
+  },
+  {
+    "component": "ecommerce-services",
+    "active": "[3.5]"
+  },
+  {
+    "component": "service-checker",
+    "active": "[service-checker-1.0]"
+  },
+  {
+    "component": "acquiring-settlement-service",
+    "active": "[acquiring-settlement-service.1.0]"
+  },
+  {
+    "component": "network-adapter",
+    "active": "[NetworkAdapter.11]"
+  },
+  {
+    "component": "mappl",
+    "active": "[mappl-53.0]"
+  },
+  {
+    "component": "mcloud-ama-service",
+    "active": "[AmaService.1]"
+  },
+  {
+    "component": "mcloud-config-web",
+    "active": "[ConfigWeb.1]"
+  },
+  {
+    "component": "doc_hmon",
+    "active": "[doc-1.0]"
+  },
+  {
+    "component": "processadapter",
+    "active": "[processadapter.12.0]"
+  },
+  {
+    "component": "issf",
+    "active": "[issf-50.0]"
+  },
+  {
+    "component": "DM",
+    "active": "[03.62]"
+  },
+  {
+    "component": "ssd",
+    "active": "[2.6, 3.1, 3.2]"
+  },
+  {
+    "component": "mcloud-enrollment-app",
+    "active": "[EnrollmentApp.1]"
+  },
+  {
+    "component": "neo-kyc",
+    "active": "[NeoKYC.4]"
+  },
+  {
+    "component": "iPAS",
+    "active": "[5]"
+  },
+  {
+    "component": "rest-api-common",
+    "active": "[rest-api-common.1.0]"
+  },
+  {
+    "component": "HCEAndroidApp",
+    "active": "[HCEAndroidApp.1.1]"
+  },
+  {
+    "component": "rtsi",
+    "active": "[rtsi-50.0.1]"
+  },
+  {
+    "component": "authentication-ios-app",
+    "active": "[mCloudiOSAuth.1.0]"
+  },
+  {
+    "component": "way4streams-commons",
+    "active": "[commons-2.0]"
+  },
+  {
+    "component": "way4u2_kernel",
+    "active": "[way4u2_kernel.11.0]"
+  },
+  {
+    "component": "sysapp",
+    "active": "[sysapp.11.0]"
+  },
+  {
+    "component": "smsadapter",
+    "active": "[adapter-4]"
+  },
+  {
+    "component": "acquiring-settlement-api",
+    "active": "[acquiring-settlement-api.1.0]"
+  },
+  {
+    "component": "doc_cmtool",
+    "active": "[doc-1.4]"
+  },
+  {
+    "component": "CARDS",
+    "active": "[03.62]"
+  },
+  {
+    "component": "otp-generator-sdk",
+    "active": "[otp-generator-sdk-1.0]"
+  },
+  {
+    "component": "dbm_exe",
+    "active": "[4.4]"
+  },
+  {
+    "component": "configuration-rest-api",
+    "active": "[conf-rest-api.1.0]"
+  },
+  {
+    "component": "ATMCFGBLDR",
+    "active": "[1.12]"
+  },
+  {
+    "component": "DeviceHost2Host",
+    "active": "[04.01]"
+  },
+  {
+    "component": "w4manager",
+    "active": "[1.62]"
+  },
+  {
+    "component": "mcloud-main",
+    "active": "[CloudMain.1]"
+  },
+  {
+    "component": "logger-service",
+    "active": "[logger-service.11.0]"
+  },
+  {
+    "component": "neo-scenarios",
+    "active": "[NeoScenarios.4]"
+  },
+  {
+    "component": "doc_scheduler",
+    "active": "[doc-2.1]"
+  },
+  {
+    "component": "ow-devops",
+    "active": "[ow.devops-1]"
+  },
+  {
+    "component": "LogViewGrafanaPlugin",
+    "active": "[grafana-plugin-1.0]"
+  },
+  {
+    "component": "doc_fdb",
+    "active": "[doc-1.0]"
+  },
+  {
+    "component": "InApp-HSMGateway",
+    "active": "[1.0]"
+  },
+  {
+    "component": "risknet-integration",
+    "active": "[1.1]"
+  },
+  {
+    "component": "file-adapter",
+    "active": "[file-adapter.11.0]"
+  },
+  {
+    "component": "JSEngine",
+    "active": "[3.0.0]"
+  },
+  {
+    "component": "appserver-maven-plugin",
+    "active": "[2]"
+  },
+  {
+    "component": "monit-unit",
+    "active": "[monit-unit-1]"
+  },
+  {
+    "component": "sqlparser",
+    "active": "[1.4]"
+  },
+  {
+    "component": "ask-aini",
+    "active": "[1.0]"
+  },
+  {
+    "component": "dbpublisher-raw-events-domain",
+    "active": "[dbpublisher-raw-events-1]"
+  },
+  {
+    "component": "doc_appserver",
+    "active": "[doc-1.6, doc-1.7]"
+  },
+  {
+    "component": "DBSM-Client",
+    "active": "[DBSM-Client.1.2]"
+  },
+  {
+    "component": "pin-management-api",
+    "active": "[pin-management-api.1.0]"
+  },
+  {
+    "component": "TransactionSwitchWSWallet",
+    "active": "[1.1]"
+  },
+  {
+    "component": "iPAS-Trevica",
+    "active": "[Trevica.3]"
+  },
+  {
+    "component": "solution-gradle-plugin",
+    "active": "[solution-gradle-plugin-1.0]"
+  },
+  {
+    "component": "neo-solution-afrinet",
+    "active": "[NeoSolutionAfrinet.1]"
+  },
+  {
+    "component": "online-changes-export",
+    "active": "[3.0]"
+  },
+  {
+    "component": "doc_egw",
+    "active": "[doc-3.5]"
+  },
+  {
+    "component": "SolutionMounterDSL",
+    "active": "[dsl-1.1]"
+  },
+  {
+    "component": "mpos-quickp",
+    "active": "[quickp-mpos.1]"
+  },
+  {
+    "component": "neo-payrolls",
+    "active": "[NeoPayrolls.4]"
+  },
+  {
+    "component": "rHazel",
+    "active": "[1.1]"
+  },
+  {
+    "component": "mcloud-cards-service",
+    "active": "[CardsService.1]"
+  },
+  {
+    "component": "restarter",
+    "active": "[restarter.11.0]"
+  },
+  {
+    "component": "bacc",
+    "active": "[bacc-61.0]"
+  },
+  {
+    "component": "DBK",
+    "active": "[03.62]"
+  },
+  {
+    "component": "neo-kyc-alqaseh",
+    "active": "[NeoKYCAlQaseh.4]"
+  },
+  {
+    "component": "neo-kyc-qp",
+    "active": "[NeoKYCQuickPayments.4]"
+  },
+  {
+    "component": "SolutionMounter",
+    "active": "[1.2]"
+  },
+  {
+    "component": "openwaygroup-parent",
+    "active": "[8]"
+  },
+  {
+    "component": "clients-rest-service",
+    "active": "[clients-rest-service.1.0]"
+  },
+  {
+    "component": "doc_wsrt",
+    "active": "[doc-1.5]"
+  },
+  {
+    "component": "cgm",
+    "active": "[cgm-53.0]"
+  },
+  {
+    "component": "WAY4WebTestingFrameworkSampleTests",
+    "active": "[sampletests-1]"
+  },
+  {
+    "component": "backoffice-portal-apollo",
+    "active": "[NeoBackofficePortalApollo.4]"
+  },
+  {
+    "component": "syscommonext",
+    "active": "[syscommonext.11.0]"
+  },
+  {
+    "component": "ssd-protocol",
+    "active": "[protocol-2.6]"
+  },
+  {
+    "component": "xml-builder",
+    "active": "[1.0]"
+  },
+  {
+    "component": "LogViewGrafanaPluginBack",
+    "active": "[grafana-plugin-back-1.0]"
+  },
+  {
+    "component": "nexto-aq",
+    "active": "[aq-4.0]"
+  },
+  {
+    "component": "WB",
+    "active": "[2.14, 2.15]"
+  },
+  {
+    "component": "merchant-portal-quickp",
+    "active": "[NeoMerchantPortalQuickP.4]"
+  },
+  {
+    "component": "authprotocol_o2",
+    "active": "[authprotocol-1.4]"
+  },
+  {
+    "component": "w4modeler",
+    "active": "[3]"
+  },
+  {
+    "component": "ufxspecgen",
+    "active": "[1.2]"
+  },
+  {
+    "component": "UFX_Host_to_Host_Interchange",
+    "active": "[2.3]"
+  },
+  {
+    "component": "doc_hmlp",
+    "active": "[doc-1.0]"
+  },
+  {
+    "component": "w4modeler-web-services",
+    "active": "[03.45.00]"
+  },
+  {
+    "component": "jira-reporting-plugin",
+    "active": "[2.0]"
+  },
+  {
+    "component": "doc_analytics",
+    "active": "[doc-1.1]"
+  },
+  {
+    "component": "mcloud-hsm-service",
+    "active": "[HsmService.1]"
+  },
+  {
+    "component": "payment-methods-rest-api",
+    "active": "[pm-rest-api.1.1]"
+  },
+  {
+    "component": "kotlinFdb",
+    "active": "[kotlin-fdb.1.0]"
+  },
+  {
+    "component": "ow-container-deploy",
+    "active": "[ow.container-deploy-1]"
+  },
+  {
+    "component": "TFRuntime",
+    "active": "[2.20]"
+  },
+  {
+    "component": "coreapi",
+    "active": "[coreapi-50.1.1]"
+  },
+  {
+    "component": "mcloud-mesh",
+    "active": "[CloudMesh.1]"
+  },
+  {
+    "component": "localization-service",
+    "active": "[NeoLocalization.4]"
+  },
+  {
+    "component": "SolutionMounterGradlePlugin",
+    "active": "[plugin-1.2]"
+  },
+  {
+    "component": "maven-vcs-plugin",
+    "active": "[1.1]"
+  },
+  {
+    "component": "posm",
+    "active": "[posm-53.0]"
+  },
+  {
+    "component": "issuing-instalment-api",
+    "active": "[issuing-instalment-api.1.0]"
+  },
+  {
+    "component": "clients-rest-api",
+    "active": "[clients-rest-api.1.0]"
+  },
+  {
+    "component": "doc_atmm",
+    "active": "[doc-atmm-50.0.1]"
+  },
+  {
+    "component": "scheduler",
+    "active": "[2.1, 2.2]"
+  },
+  {
+    "component": "mailbox-service",
+    "active": "[NeoMailbox.4]"
+  },
+  {
+    "component": "ts-hsm-proxy",
+    "active": "[hsm-proxy-1.0]"
+  },
+  {
+    "component": "claim-rest-api",
+    "active": "[claim-rest-api.1.0]"
+  },
+  {
+    "component": "deployment-engine",
+    "active": "[de-2.0]"
+  },
+  {
+    "component": "netserver",
+    "active": "[6.2]"
+  },
+  {
+    "component": "mwb-oschadny",
+    "active": "[oschadny-1.5]"
+  },
+  {
+    "component": "mwb-ukrexim",
+    "active": "[ukrexim-1.5]"
+  },
+  {
+    "component": "AppserverConsole",
+    "active": "[2.0]"
+  },
+  {
+    "component": "Stoplists_Exchange_File_Format",
+    "active": "[1.1]"
+  },
+  {
+    "component": "appcommon",
+    "active": "[appcommon.11.0]"
+  },
+  {
+    "component": "WAY4LogBook",
+    "active": "[8.17.3]"
+  },
+  {
+    "component": "Fleet_ACQ_Data_Exchange",
+    "active": "[1.4]"
+  },
+  {
+    "component": "pin-management-service",
+    "active": "[pin-management-service.1.0]"
+  },
+  {
+    "component": "mcloud-log-view",
+    "active": "[LogView.1]"
+  },
+  {
+    "component": "sysslf4j",
+    "active": "[sysslf4j.11.0]"
+  },
+  {
+    "component": "f1-dashboard-fe",
+    "active": "[f1-dashboard-1.0]"
+  },
+  {
+    "component": "claim-rest-service",
+    "active": "[claim-rest-service.1.0]"
+  },
+  {
+    "component": "online-application-export",
+    "active": "[3.0]"
+  },
+  {
+    "component": "appco",
+    "active": "[1.0]"
+  },
+  {
+    "component": "billing-gateway",
+    "active": "[3.5]"
+  },
+  {
+    "component": "consumer-app-afrinet",
+    "active": "[afrinet.1]"
+  },
+  {
+    "component": "ips-emulators",
+    "active": "[ips-emulators-2]"
+  },
+  {
+    "component": "escrow-generator",
+    "active": "[8]"
+  },
+  {
+    "component": "jira-common",
+    "active": "[2]"
+  },
+  {
+    "component": "doc_tf",
+    "active": "[doc-2.18]"
+  },
+  {
+    "component": "mcloud-config-service",
+    "active": "[ConfigService.1]"
+  },
+  {
+    "component": "f1-dashboard-be",
+    "active": "[f1-dashboard-be-1.0]"
+  },
+  {
+    "component": "sysdataexchange",
+    "active": "[sysdataexchange.11.0]"
+  },
+  {
+    "component": "mdes-tokenization",
+    "active": "[MdesTokenization.1.0]"
+  },
+  {
+    "component": "cltapi",
+    "active": "[cltapi-55.0]"
+  },
+  {
+    "component": "wb-oschadny",
+    "active": "[oschadny-2.15]"
+  },
+  {
+    "component": "mbilling",
+    "active": "[mbilling-1]"
+  },
+  {
+    "component": "AffiliatedFormat",
+    "active": "[2.14]"
+  },
+  {
+    "component": "doc_wpscp",
+    "active": "[doc-03.60.30]"
+  },
+  {
+    "component": "ic-push-server",
+    "active": "[1.0]"
+  },
+  {
+    "component": "doc_iam",
+    "active": "[doc-1.0]"
+  },
+  {
+    "component": "TransactionSwitchWSPinDelivery",
+    "active": "[1.1]"
+  },
+  {
+    "component": "mcloud-smp-service",
+    "active": "[SmpService.1]"
+  },
+  {
+    "component": "iso8583engine",
+    "active": "[2.5]"
+  },
+  {
+    "component": "mcloud-push-service",
+    "active": "[PushService.1]"
+  },
+  {
+    "component": "backoffice-portal-alqaseh",
+    "active": "[NeoBackofficePortalAlQaseh.4]"
+  },
+  {
+    "component": "mcloud-ts-service",
+    "active": "[CloudTS.1]"
+  },
+  {
+    "component": "ow-dt",
+    "active": "[ow.dt-0]"
+  },
+  {
+    "component": "jira-plugin-bom",
+    "active": "[2]"
+  },
+  {
+    "component": "tengineservice",
+    "active": "[tengineservice.12.0]"
+  },
+  {
+    "component": "system-cards",
+    "active": "[System-Cards.1.0]"
+  },
+  {
+    "component": "service_registry",
+    "active": "[service_registry.1.0]"
+  },
+  {
+    "component": "w4c-parent",
+    "active": "[w4c-parent-0]"
+  },
+  {
+    "component": "httpservice",
+    "active": "[httpservice.11.0]"
+  },
+  {
+    "component": "doc_wweditor",
+    "active": "[doc-62.0.1]"
+  },
+  {
+    "component": "testlib",
+    "active": "[2]"
+  },
+  {
+    "component": "visar",
+    "active": "[visar-57.0]"
+  },
+  {
+    "component": "application-rest-api",
+    "active": "[application-rest-api.1.0]"
+  },
+  {
+    "component": "ccomprotocol",
+    "active": "[ccomprotocol-1]"
+  },
+  {
+    "component": "ktorBoot",
+    "active": "[ktor-boot.1.0]"
+  },
+  {
+    "component": "ts-sigma",
+    "active": "[ts-sigma-1.0]"
+  },
+  {
+    "component": "jira-mailhandler-plugin",
+    "active": "[2]"
+  },
+  {
+    "component": "syscommon",
+    "active": "[syscommon.11.0]"
+  },
+  {
+    "component": "dbadapter",
+    "active": "[DBAdapter.11]"
+  },
+  {
+    "component": "authmodlib",
+    "active": "[authmodlib.12.0]"
+  },
+  {
+    "component": "ecommerce-gateway",
+    "active": "[3.5]"
+  },
+  {
+    "component": "sysmanagement",
+    "active": "[sysmanagement.11.0]"
+  },
+  {
+    "component": "mcloud-saga-service",
+    "active": "[SagaService.1]"
+  },
+  {
+    "component": "acqf",
+    "active": "[acqf-53.0]"
+  },
+  {
+    "component": "ModelerGen2",
+    "active": "[3]"
+  },
+  {
+    "component": "doc_asmc",
+    "active": "[doc-1.7, doc-2.0]"
+  },
+  {
+    "component": "consumer-app-quickp",
+    "active": "[quickp.1]"
+  },
+  {
+    "component": "OpenWay_POS_ISO_Protocol",
+    "active": "[01.01]"
+  },
+  {
+    "component": "neo-session",
+    "active": "[NeoApplicationSession.4]"
+  },
+  {
+    "component": "fpp",
+    "active": "[1.2]"
+  },
+  {
+    "component": "merchant-portal-apollo",
+    "active": "[NeoMerchantPortalApollo.4]"
+  },
+  {
+    "component": "SigmaApiPlatform",
+    "active": "[platform.1.0]"
+  },
+  {
+    "component": "jira-admin-plugin",
+    "active": "[2]"
+  },
+  {
+    "component": "msw",
+    "active": "[msw-53.0]"
+  },
+  {
+    "component": "ukrexim-ic-api",
+    "active": "[ukrexim-5.0]"
+  },
+  {
+    "component": "InternDemo",
+    "active": "[1.0]"
+  },
+  {
+    "component": "oschadny-ic-api",
+    "active": "[oschadny-5.0]"
+  },
+  {
+    "component": "w4modeler-dbModel",
+    "active": "[2.2]"
+  },
+  {
+    "component": "SPDHEngine",
+    "active": "[1.1]"
+  },
+  {
+    "component": "DbmBpmSteps",
+    "active": "[dbm-bpm-steps-1]"
+  },
+  {
+    "component": "mcr",
+    "active": "[mcr-57.0]"
+  },
+  {
+    "component": "doc_streams",
+    "active": "[doc-2.0]"
+  },
+  {
+    "component": "appserver-monitoring",
+    "active": "[1.0]"
+  },
+  {
+    "component": "JSEngineModelsGenerator",
+    "active": "[models-generator-1.0]"
+  },
+  {
+    "component": "mltw4w",
+    "active": "[mltw4w-53.0.1]"
+  },
+  {
+    "component": "w4web3",
+    "active": "[3.62]"
+  },
+  {
+    "component": "sysw4m",
+    "active": "[sysw4m.11.1]"
+  },
+  {
+    "component": "way4streams-data-model-commons",
+    "active": "[data-model-commons-1]"
+  },
+  {
+    "component": "acquiring-rest-service",
+    "active": "[acquiring-rest-service.1.0]"
+  },
+  {
+    "component": "mcloud-whitebox-service",
+    "active": "[WhiteboxService.1]"
+  },
+  {
+    "component": "jira-workflow-plugin",
+    "active": "[3]"
+  },
+  {
+    "component": "test-component",
+    "active": "[6.1]"
+  },
+  {
+    "component": "doc_ts",
+    "active": "[doc-1.3]"
+  },
+  {
+    "component": "persomodule",
+    "active": "[1.7]"
+  },
+  {
+    "component": "doc_ifp",
+    "active": "[doc-1.2]"
+  },
+  {
+    "component": "integration-rest-api",
+    "active": "[integration-rest-api.1.0]"
+  },
+  {
+    "component": "Industry_Specific_Addenda_Format",
+    "active": "[1.1]"
+  },
+  {
+    "component": "doc_mpos",
+    "active": "[doc-mpos-1.0]"
+  },
+  {
+    "component": "issuing-instalment-service",
+    "active": "[issuing-instalment-service.1.0]"
+  },
+  {
+    "component": "mcloud-notification-ccom",
+    "active": "[NotificationCCom.1]"
+  },
+  {
+    "component": "paymentserver",
+    "active": "[6]"
+  },
+  {
+    "component": "authserver",
+    "active": "[3.5]"
+  },
+  {
+    "component": "ReleaseNotesReportTemplates",
+    "active": "[1.0]"
+  },
+  {
+    "component": "flumo",
+    "active": "[1.0]"
+  },
+  {
+    "component": "ts-disputes",
+    "active": "[ts-disputes-1.0]"
+  },
+  {
+    "component": "mcloud-token-vault",
+    "active": "[TokenVault.1]"
+  },
+  {
+    "component": "SPM",
+    "active": "[03.61]"
+  },
+  {
+    "component": "jasper-template",
+    "active": "[jasper-scriptlet-1.0]"
+  },
+  {
+    "component": "pmstdlib",
+    "active": "[3.5]"
+  },
+  {
+    "component": "HSMGateway",
+    "active": "[3.5]"
+  },
+  {
+    "component": "mwb-moldindcon",
+    "active": "[moldindcon-1.5]"
+  },
+  {
+    "component": "iam-rest-service",
+    "active": "[iam-rest-service.1.0]"
+  },
+  {
+    "component": "access-control-service",
+    "active": "[NeoAccessControl.4]"
+  },
+  {
+    "component": "UFX_Host_to_Host_Interchange_Fleet_Data",
+    "active": "[1.6]"
+  },
+  {
+    "component": "ssd-commons",
+    "active": "[1]"
+  },
+  {
+    "component": "doc_3ds",
+    "active": "[doc-1.2]"
+  },
+  {
+    "component": "DBSM-TeamCity-Plugin",
+    "active": "[DBSM-TeamCity-Plugin.1.1]"
+  },
+  {
+    "component": "dbpublisher-reconciliation-events-domain",
+    "active": "[dbpublisher-reconciliation-events-1]"
+  },
+  {
+    "component": "neo-scenarios-unibank",
+    "active": "[NeoScenariosUnibank.4]"
+  },
+  {
+    "component": "mcloud-ottp-service",
+    "active": "[CloudOTTP.1]"
+  },
+  {
+    "component": "ows-license",
+    "active": "[ows-license.11.0]"
+  },
+  {
+    "component": "authprotocol",
+    "active": "[authprotocol-1]"
+  },
+  {
+    "component": "Fram",
+    "active": "[1.0]"
+  },
+  {
+    "component": "mwb-victoria",
+    "active": "[victoria-1.5]"
+  },
+  {
+    "component": "cswl",
+    "active": "[cswl-52.0]"
+  },
+  {
+    "component": "consumer-app-apollo",
+    "active": "[apollo.1]"
+  },
+  {
+    "component": "neo-files",
+    "active": "[NeoFiles.4]"
+  },
+  {
+    "component": "ASFM-SafeNet",
+    "active": "[1.44]"
+  },
+  {
+    "component": "jira-qa-plugin",
+    "active": "[2]"
+  },
+  {
+    "component": "cloudpay-common",
+    "active": "[CloudpayCommon.1]"
+  },
+  {
+    "component": "config-file-service",
+    "active": "[config-file-service.1.0]"
+  },
+  {
+    "component": "w4wlogin",
+    "active": "[1]"
+  },
+  {
+    "component": "mcloud-sessions-service",
+    "active": "[SessionsService.1]"
+  },
+  {
+    "component": "iam-rest-api",
+    "active": "[iam-rest-api.1.0]"
+  },
+  {
+    "component": "backoffice-portal-quickp",
+    "active": "[NeoBackofficePortalQuickP.4]"
+  },
+  {
+    "component": "mailadapter",
+    "active": "[mailadapter-1]"
+  },
+  {
+    "component": "doc_emvperso",
+    "active": "[doc-1.0]"
+  },
+  {
+    "component": "merchant-portal-unibank",
+    "active": "[NeoMerchantPortalUnibank.4]"
+  },
+  {
+    "component": "H2H_ISO_Protocol",
+    "active": "[04.01]"
+  },
+  {
+    "component": "ic-builder",
+    "active": "[ic-builder-1.0]"
+  },
+  {
+    "component": "instl",
+    "active": "[instl-57.0]"
+  },
+  {
+    "component": "neo-scenarios-alqaseh",
+    "active": "[NeoScenariosAlQaseh.4]"
+  },
+  {
+    "component": "log-events-domain",
+    "active": "[log-events-1]"
+  },
+  {
+    "component": "scinspector",
+    "active": "[1.2]"
+  },
+  {
+    "component": "mbilling-model",
+    "active": "[mbilling-model-1]"
+  },
+  {
+    "component": "W4WebDeploymentDescriptor",
+    "active": "[3.1]"
+  },
+  {
+    "component": "JSengineTestingFrameworkCore",
+    "active": "[1.3]"
+  },
+  {
+    "component": "components-integration",
+    "active": "[components-integration.1]"
+  },
+  {
+    "component": "iam",
+    "active": "[iam-57.0]"
+  },
+  {
+    "component": "wb-victoria",
+    "active": "[victoria-2.15]"
+  },
+  {
+    "component": "CP",
+    "active": "[2.7, 2.8]"
+  },
+  {
+    "component": "system-components",
+    "active": "[1.5929]"
+  },
+  {
+    "component": "application-rest-service",
+    "active": "[application-rest-service.1.0]"
+  },
+  {
+    "component": "ATM-statistic-analyser",
+    "active": "[3.0]"
+  },
+  {
+    "component": "mwb-smartnet",
+    "active": "[smartnet-2.0]"
+  },
+  {
+    "component": "mcloud-log-elastic",
+    "active": "[LogElastic.1]"
+  },
+  {
+    "component": "neo-scenarios-qp",
+    "active": "[NeoScenariosQuickPayments.4]"
+  },
+  {
+    "component": "jira-plugin-deployer",
+    "active": "[plugin-updater.1]"
+  },
+  {
+    "component": "doc_mesh",
+    "active": "[doc-1.0]"
+  },
+  {
+    "component": "azericard-ic-api",
+    "active": "[azericard-5.0]"
+  }
+]

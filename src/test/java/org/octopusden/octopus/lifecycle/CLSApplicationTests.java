@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -138,9 +139,12 @@ class CLSApplicationTests {
 		assertEquals("\"" + "unsupported" + "\"", apiController.getLifecycleStage("component1", "1.0.552"));
 		assertEquals("\"" + "unsupported" + "\"", apiController.getLifecycleStage("component1", "1.0.553"));
 
+		List<String> versionRanges = new ArrayList<>();
+		versionRanges.add("[1.0.552,)");
+
 		apiController.addRule("component1", "test-rule1", "component", "maintenance",
 				Optional.of("null"), Optional.empty(), Optional.empty(), Optional.empty(),
-				Optional.of("[1.0.552,)"));
+				Optional.of(versionRanges));
 
 		assertEquals("\"" + "unsupported" + "\"", apiController.getLifecycleStage("component1", "1.0.551"));
 		assertEquals("\"" + "maintenance" + "\"", apiController.getLifecycleStage("component1", "1.0.552"));
@@ -173,9 +177,12 @@ class CLSApplicationTests {
 				Optional.of("abs"), Optional.of("2025-09-19"), Optional.of("2025-09-21"), Optional.empty(),
 				Optional.empty());
 
+		List<String> versionRanges = new ArrayList<>();
+		versionRanges.add("[1.0.552,)");
+
 		apiController.addRule("component1", "test-rule2", "component", "active",
 				Optional.of("null"), Optional.empty(), Optional.empty(), Optional.empty(),
-				Optional.of("[1.0.552,)"));
+				Optional.of(versionRanges));
 
 
 		assertEquals("\"" + "unsupported" + "\"", apiController.getLifecycleStage("component1", "1.0.551"));

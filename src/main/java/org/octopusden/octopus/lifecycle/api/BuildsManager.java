@@ -105,12 +105,20 @@ public class BuildsManager {
 
     @Cacheable(value = "getVersionByBuild", key = "#buildId")
     public String getVersionByBuild(String buildId) {
+        return getVersionByBuild(buildId, false);
+    }
+
+    public String getVersionByBuild(String buildId, boolean getNextVersion) {
         NumericVersionFactory numericVersionFactory = new NumericVersionFactory(VERSION_NAMES);
         IVersionInfo iVersionInfo = numericVersionFactory.create(buildId);
 
         List<String> verItems = new ArrayList<>();
         for (int i = 0; i < iVersionInfo.getItemsCount(); i++) {
-            verItems.add(String.valueOf(iVersionInfo.getItem(i)));
+            if (getNextVersion && (i == iVersionInfo.getItemsCount() - 1)) {
+                verItems.add(String.valueOf(iVersionInfo.getItem(i) + 1));
+            } else {
+                verItems.add(String.valueOf(iVersionInfo.getItem(i)));
+            }
         }
 
         return String.join(".", verItems);

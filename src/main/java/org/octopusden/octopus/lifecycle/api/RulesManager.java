@@ -1,5 +1,10 @@
 package org.octopusden.octopus.lifecycle.api;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import net.minidev.json.JSONObject;
 import org.octopusden.octopus.lifecycle.db.ComponentsRules;
 import org.octopusden.octopus.lifecycle.db.ComponentsRulesRepository;
 import org.octopusden.octopus.lifecycle.db.Rule;
@@ -9,13 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RulesManager {
@@ -27,6 +35,8 @@ public class RulesManager {
 
     @Autowired
     private ComponentsManager componentsManager;
+    @Autowired
+    private BuildsManager buildsManager;
 
     private boolean checkVersionRange(String versionRange) {
         try {
@@ -67,7 +77,7 @@ public class RulesManager {
 
         Rule rule = new Rule(name, type, putLifecycleStage);
 
-        if (dateFormat.get().equals("null")) {
+        if (dateFormat.isEmpty() || dateFormat.get().equals("null")) {
             rule.dateFormat = null;
         } else if (dateFormat.get().equals("abs")) {
             rule.dateFormat = "abs";
@@ -218,6 +228,64 @@ public class RulesManager {
 
         componentsRulesRepository.save(componentRule);
         ruleRepository.delete(rule);
+
+        return new ResponseEntity(HttpStatus.ACCEPTED);
+    }
+
+    private String versionRangeLineBuilder(String buildId) {
+        StringBuilder lineBuilder = new StringBuilder();
+        lineBuilder.append("[");
+        lineBuilder.append(buildsManager.getVersionByBuild(buildId));
+        lineBuilder.append(",");
+        lineBuilder.append(buildsManager.getVersionByBuild(buildId, true));
+        lineBuilder.append(")");
+        return lineBuilder.toString();
+    }
+
+    public ResponseEntity addRulesFromFile(MultipartFile file) throws IOException {
+        String jsonString = new String(file.getBytes(), StandardCharsets.UTF_8);
+        JsonArray jsonArray = JsonParser.parseString(jsonString).getAsJsonArray();
+
+        for (JsonElement jsonElement : jsonArray) {
+            String componentId = jsonElement.getAsJsonObject().get("component").getAsString();
+
+            try {
+                String versionRangesActiveString = jsonElement.getAsJsonObject().get("active").getAsString();
+                List<String> versionRangesActive = Arrays.stream(versionRangesActiveString.substring(1, versionRangesActiveString.length() - 1)
+                        .split(","))
+                        .map(String::trim)
+                        .toList();
+
+                List<String> versionRanges = new ArrayList<>();
+                for (String versionRange : versionRangesActive) {
+                    versionRanges.add(versionRangeLineBuilder(versionRange));
+                }
+
+                addRule(componentId, componentId + "-from-file-active", "component",
+                        "active", Optional.empty(), Optional.empty(),
+                        Optional.empty(), Optional.empty(), Optional.of(versionRanges));
+
+            } catch (NullPointerException exception) {}
+
+            try {
+                String versionRangesMaintenanceString = jsonElement.getAsJsonObject().get("maintenance").getAsString();
+                List<String> versionRangesMaintenance = Arrays.stream(versionRangesMaintenanceString.substring(1, versionRangesMaintenanceString.length() - 1)
+                        .split(","))
+                        .map(String::trim)
+                        .toList();
+
+                List<String> versionRanges = new ArrayList<>();
+                for (String versionRange : versionRangesMaintenance) {
+                    versionRanges.add(versionRangeLineBuilder(versionRange));
+                }
+
+                ResponseEntity e = addRule(componentId, componentId + "-from-file-maintenance", "component",
+                        "maintenance", Optional.empty(), Optional.empty(),
+                        Optional.empty(), Optional.empty(), Optional.of(versionRanges));
+
+                System.out.println(e.getBody());
+            } catch (NullPointerException exception) {}
+        }
 
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
@@ -176,5 +177,14 @@ public class ApiController {
             return rulesManager.deleteRule(ruleName, componentId);
         }
         throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+    }
+
+    @PostMapping("/rules/fromFile")
+    @Operation(
+            summary = "Add rules from file"
+    )
+    public ResponseEntity uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+        if (file.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE);
+        return rulesManager.addRulesFromFile(file);
     }
 }

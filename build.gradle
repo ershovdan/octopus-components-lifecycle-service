@@ -47,6 +47,9 @@ dependencies {
 	implementation 'org.octopusden.octopus.releng:releng-lib:2.0.8'
 	implementation 'org.keycloak:keycloak-spring-boot-starter:22.0.2'
 
+	implementation group: 'org.octopusden.octopus.infrastructure', name: 'components-registry-service-client', version: '2.0.11'
+
+
 	// Testing
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'junit:junit:4.13.2'

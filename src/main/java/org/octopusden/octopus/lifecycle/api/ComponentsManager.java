@@ -66,6 +66,14 @@ public class ComponentsManager {
         return versions;
     }
 
+
+//    @Cacheable(value = "getComponent2", key = "#componentId")
+//    public Component getComponent2(String componentId) throws IOException {
+//
+//    }
+
+
+
     @Cacheable(value = "getComponent", key = "#componentId")
     public Component getComponent(String componentId) throws IOException {
         JsonObject fullJson = gson.fromJson(getRequest(componentsRegistryServiceUrl + componentId), JsonObject.class).getAsJsonObject();

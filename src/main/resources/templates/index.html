@@ -27,6 +27,8 @@
 
     <p style="display: none;" th:text="${canEdit}" id="canEdit"></p>
 
+    <div id="dropTarget"></div>
+
     <!-- Page Wrapper -->
     <div id="wrapper">
         <th:block th:include="/sidebar_block"></th:block>
@@ -39,7 +41,7 @@
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <div class="d-sm-flex w-50 align-items-center justify-content-between mb-4 mt-4">
+                    <div class="d-sm-flex w-50 align-items-center mb-4 mt-4">
                         <h1 class="h3 mb-0 text-gray-800">Components Rules</h1>
                     </div>
 
@@ -163,6 +165,18 @@
         position: relative;
         width: 45px;
     }
+
+    #dropTarget {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background: transparent;
+        transition: background-color 0.2s ease;
+    }
+
+    #dropTarget.active {
+        background: rgba(0, 123, 255, 0.1);
+    }
 </style>
 
 <script th:src="@{/js/compocaste-base.js}"></script>
@@ -184,6 +198,56 @@
     document.getElementById('editRuleBlock').remove()
 
     document.getElementById("components_li").classList.add("active")
+
+
+    let dragCounter = 0
+    const dropTarget = document.getElementById("dropTarget")
+
+    document.addEventListener("dragenter", e => {
+        if (!e.dataTransfer.types.includes("Files")) return
+        dragCounter++
+        dropTarget.classList.add("active")
+    })
+
+    document.addEventListener("dragleave", e => {
+        dragCounter--
+        if (dragCounter === 0) dropTarget.classList.remove("active")
+    })
+
+    document.addEventListener("dragover", e => {
+        e.preventDefault()
+    })
+
+    document.addEventListener("drop", e => {
+        e.preventDefault()
+        dragCounter = 0
+        dropTarget.classList.remove("active")
+
+        const file = e.dataTransfer.files[0]
+        if (!file) return
+
+        const formData = new FormData()
+        formData.append("file", file)
+
+        if (confirm("Are you sure you want to upload setup file?")) {
+            fetch("/api/rules/fromFile", {
+                method: "POST",
+                body: formData
+            })
+                .then(res => {
+                    if (!res.ok) {
+                        alert("Invalid file")
+                        throw new Error("Upload failed")
+                    }
+                    console.log("Upload success")
+                })
+                .catch(err => {
+                    console.error(err)
+                    alert("Invalid file")
+                })
+        }
+    })
+
 
     document.addEventListener("DOMContentLoaded", () => {
         const table = new DataTable("#mainTable", {
