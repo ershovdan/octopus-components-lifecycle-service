@@ -85,8 +85,10 @@
                     <div id="verRangePicker" class="row mt-4"  style="display: none;">
                         <div id="versionRangeFields" style="display: flex; flex-direction: column;">
                         </div>
-                        <div style="display: flex; justify-content: center;">
-                            <img id="addVerRange" th:src="@{img/add.png}" class="addVerRange" height="25" width="25">
+                        <div style="display: grid; grid-template-columns: 200px 20px; column-gap: 10px;">
+                            <div style="display: flex; justify-content: center;">
+                                <img id="addVerRange" th:src="@{img/add.png}" class="addVerRange" height="25" width="25">
+                            </div>
                         </div>
                     </div>
 
@@ -118,6 +120,18 @@
 
         .addVerRange {
             margin-top: 10px;
+        }
+
+        .deleteVerRange {
+            margin-top: 12px;
+        }
+
+        .deleteVerRange:hover {
+            cursor: pointer;
+        }
+
+        .addVerRange:hover {
+            cursor: pointer;
         }
     </style>
 
@@ -166,12 +180,28 @@
                 document.getElementById('beforeAbsDate').disabled = !document.getElementById('beforeAbsDate').disabled
             }
 
+            function checkAllVerRangesFull() {
+                for (let vr of document.getElementsByClassName("verRange")) {
+                    if (vr.value === "") return false
+                }
+                return true
+            }
+
             document.getElementById("addVerRange").onclick = () => {
-                versionRangeCount++
-                document.getElementById("versionRangeFields").insertAdjacentHTML(
-                    "beforeend",
-                    "<input class='verRange' type=\"text\" id=\"verRange" + versionRangeCount + "\" placeholder=\"Enter range\">"
-                )
+                if (checkAllVerRangesFull()) {
+                    versionRangeCount++
+                    document.getElementById("versionRangeFields").insertAdjacentHTML(
+                        "beforeend",
+                        "<div style=\"display: grid; grid-template-columns: 200px 20px; column-gap: 10px;\">" +
+                        "<input type=\"text\" class=\"verRange\" id=\"verRange" + versionRangeCount + "\" placeholder=\"Enter range\">" +
+                        "<img id=\"deleteVerRange" + versionRangeCount + "\" src=\"img/delete.png\" class=\"deleteVerRange\" height=\"20\" width=\"20\">" +
+                        "</div>"
+                    )
+
+                    document.getElementById('deleteVerRange' + versionRangeCount).addEventListener("click", function (e) {
+                        e.target.parentElement.remove()
+                    })
+                }
             }
 
             const initialRule = JSON.parse(httpGet('/api/rules/' + ruleName));
@@ -210,9 +240,18 @@
                     for (let i = 1; i <= versionRangeCount; i++) {
                         document.getElementById("versionRangeFields").insertAdjacentHTML(
                             "beforeend",
-                            "<input class='verRange' type=\"text\" id=\"verRange" + i + "\" placeholder=\"Enter range\">"
+                            "<div style=\"display: grid; grid-template-columns: 200px 20px; column-gap: 10px;\">" +
+                            "<input type=\"text\" class=\"verRange\" id=\"verRange" + i + "\" placeholder=\"Enter range\">" +
+                            "<img id=\"deleteVerRange" + i + "\" src=\"img/delete.png\" class=\"deleteVerRange\" height=\"20\" width=\"20\">" +
+                            "</div>"
                         )
                         document.getElementById('verRange' + i).value = initialRule["versionRange"][i - 1]
+
+                        document.getElementById('deleteVerRange' + i).addEventListener("click", function (e) {
+                            e.target.parentElement.remove()
+                        })
+
+                        if (i === 1) document.getElementById('deleteVerRange1').remove()
                     }
 
 
@@ -233,7 +272,7 @@
                 if (byChoice === "verRange") {
                     url += '&newDateFormat=null'
                     for (let i = 1; i <= versionRangeCount; i++) {
-                        if (document.getElementById('verRange' + i).value != "") {
+                        if (document.getElementById('verRange' + i) != null && document.getElementById('verRange' + i).value != "") {
                             url += '&newVersionRange=' + document.getElementById('verRange' + i).value
                         }
                     }
