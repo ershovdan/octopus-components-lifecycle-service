@@ -1,5 +1,11 @@
 package org.octopusden.octopus.lifecycle.api;
 
+import jakarta.annotation.PostConstruct;
+import org.jetbrains.annotations.NotNull;
+import org.octopusden.octopus.components.registry.client.impl.ClassicComponentsRegistryServiceClient;
+import org.octopusden.octopus.components.registry.client.impl.ClassicComponentsRegistryServiceClientUrlProvider;
+import org.octopusden.octopus.components.registry.core.dto.ComponentV1;
+import org.octopusden.octopus.components.registry.core.dto.ComponentV3;
 import org.octopusden.octopus.lifecycle.api.entities.Build;
 import org.octopusden.octopus.lifecycle.api.entities.Component;
 import com.google.gson.Gson;
@@ -20,7 +26,7 @@ import java.util.*;
 
 @Service
 public class ComponentsManager {
-    @Value("${app.componentsRegistryService.baseUrl}${app.componentsRegistryService.path}")
+    @Value("${app.componentsRegistryService.baseUrl}")
     public String componentsRegistryServiceUrl;
 
     @Autowired
@@ -31,14 +37,17 @@ public class ComponentsManager {
 
     public ComponentsManager() {}
 
-    private String getStringOrNullFromJson(JsonElement jsonElement) {
-        if (!jsonElement.isJsonNull()) return jsonElement.getAsString();
-        return null;
-    }
+    private ClassicComponentsRegistryServiceClient componentsRegistryServiceClient;
 
-    private boolean isArchived(String componentName) {
-        if (componentName == null) return false;
-        return componentName.indexOf("(archived)") == componentName.length() - 10;
+    @PostConstruct
+    public void initComponentsManager() {
+        componentsRegistryServiceClient = new ClassicComponentsRegistryServiceClient(new ClassicComponentsRegistryServiceClientUrlProvider() {
+            @NotNull
+            @Override
+            public String getApiUrl() {
+                return componentsRegistryServiceUrl;
+            }
+        });
     }
 
     private String getRequest(String url) throws IOException {
@@ -66,41 +75,24 @@ public class ComponentsManager {
         return versions;
     }
 
-
-//    @Cacheable(value = "getComponent2", key = "#componentId")
-//    public Component getComponent2(String componentId) throws IOException {
-//
-//    }
-
-
-
     @Cacheable(value = "getComponent", key = "#componentId")
     public Component getComponent(String componentId) throws IOException {
-        JsonObject fullJson = gson.fromJson(getRequest(componentsRegistryServiceUrl + componentId), JsonObject.class).getAsJsonObject();
+        System.out.println(componentsRegistryServiceClient.getById(componentId));
 
         Component component = new Component();
-        component.id = fullJson.get("id").getAsString();
-        component.name = getStringOrNullFromJson(fullJson.get("name"));
-        component.componentOwner = fullJson.get("componentOwner").getAsString();
-        component.securityChampion = getStringOrNullFromJson(fullJson.get("securityChampion"));
-        component.releaseManager = getStringOrNullFromJson(fullJson.get("releaseManager"));
+        component.id = componentsRegistryServiceClient.getById(componentId).getId();
+        component.name = componentsRegistryServiceClient.getById(componentId).getName();
+        component.componentOwner = componentsRegistryServiceClient.getById(componentId).getComponentOwner();
+        component.securityChampion = componentsRegistryServiceClient.getById(componentId).getSecurityChampion();
+        component.releaseManager = componentsRegistryServiceClient.getById(componentId).getReleaseManager();
+        component.isArchived = componentsRegistryServiceClient.getById(componentId).getArchived();
 
-        component.isArchived = isArchived(component.name);
+        component.distributionExplicit = componentsRegistryServiceClient.getById(componentId).getDistribution().getExplicit();
+        component.distributionExternal = componentsRegistryServiceClient.getById(componentId).getDistribution().getExternal();
 
-        component.distributionExplicit = fullJson.get("distribution").getAsJsonObject().get("explicit").getAsBoolean();
-        component.distributionExternal = fullJson.get("distribution").getAsJsonObject().get("external").getAsBoolean();
+        component.distributionDocker = Collections.singletonList(componentsRegistryServiceClient.getById(componentId).getDistribution().getDocker());
 
-        if (fullJson.get("distribution").getAsJsonObject().get("docker") != null) {
-            component.distributionDocker = Arrays.stream(fullJson.get("distribution").getAsJsonObject().get("docker").getAsString().split(",")).toList();
-        } else {
-            component.distributionDocker = null;
-        }
-
-        if (fullJson.get("distribution").getAsJsonObject().get("GAV") != null) {
-            component.distributionGAV = List.of(fullJson.get("distribution").getAsJsonObject().get("GAV").getAsString().split(","));
-        } else {
-            component.distributionGAV = null;
-        }
+        component.distributionGAV = Collections.singletonList(componentsRegistryServiceClient.getById(componentId).getDistribution().getGav());
 
         List<Build> builds = buildsManager.getBuildsByComponent(component.id);
 
@@ -124,25 +116,18 @@ public class ComponentsManager {
 
 
     @Cacheable(value = "getComponents", key = "{#showArchived, #owner}")
-    public List<String> getComponents(Optional<String> showArchived, Optional<String> owner) throws IOException {
-        JsonArray fullJson = gson.fromJson(getRequest(componentsRegistryServiceUrl), JsonObject.class).getAsJsonObject().get("components").getAsJsonArray();
-        List<String> components = new ArrayList<>();
+    public List<String> getComponents(Optional<String> showArchived, Optional<String> owner) {
+        ArrayList<String> componentIds = new ArrayList<>();
 
-        boolean showArch = false;
-        if (showArchived.isPresent()) {
-            showArch = Boolean.parseBoolean(showArchived.get());
+        boolean showArch = showArchived.isPresent() && showArchived.get().equals("true");
+
+        for (ComponentV3 component : componentsRegistryServiceClient.getComponents()) {
+            if (component.getComponent().getArchived() && !showArch) continue;
+            if (owner.isPresent() && !component.getComponent().getComponentOwner().equals(owner.get())) continue;
+            componentIds.add(component.getComponent().getId());
         }
 
-        for (int i = 0; i < fullJson.size(); i++) {
-            JsonObject jsonComponent = fullJson.get(i).getAsJsonObject().getAsJsonObject();
-
-            if (isArchived(getStringOrNullFromJson(jsonComponent.get("name"))) && !showArch) continue;
-            if (owner.isPresent() && !jsonComponent.get("componentOwner").getAsString().equals(owner.get())) continue;
-
-            components.add(jsonComponent.get("id").getAsString());
-        }
-
-        return components;
+        return componentIds;
     }
 
 }

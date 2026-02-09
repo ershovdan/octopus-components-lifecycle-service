@@ -35,6 +35,7 @@ public class RulesManager {
 
     @Autowired
     private ComponentsManager componentsManager;
+
     @Autowired
     private BuildsManager buildsManager;
 
